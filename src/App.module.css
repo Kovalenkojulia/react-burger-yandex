@@ -1,0 +1,11 @@
+.main {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    margin-top: 20px;
+}
+.container {
+    max-width: 1422px;
+    margin-right: 50px;
+    margin-left: 34px;
+}

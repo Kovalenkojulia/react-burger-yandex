@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    align-items: center;
+
+
+}
+.item {
+    display: flex;
+    align-items: center;
+}
+.items {
+    display: flex;
+    align-items: center;
+}

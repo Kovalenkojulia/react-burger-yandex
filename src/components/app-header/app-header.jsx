@@ -27,9 +27,6 @@ const AppHeader = () => {
                 </div>
 
 
-
-
-
             <div className={styles.item}>
                 <ProfileIcon type="primary" />
                 <Button htmlType="button" type="secondary" size="large">
@@ -37,10 +34,6 @@ const AppHeader = () => {
                 </Button>
 
             </div>
-
-
-
-
 
         </header>
     )

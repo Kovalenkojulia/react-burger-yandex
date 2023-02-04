@@ -8,7 +8,7 @@ import styles from './app.module.css'
 
 function App() {
   return (
-    <main>
+    <div>
       <AppHeader/>
         <div className={styles.title}>
             <p className="text text_type_main-large">
@@ -18,13 +18,13 @@ function App() {
         </div>
 
 
-        <div className={styles.main}>
+        <main className={styles.main}>
             <BurgerConstructor dataBurger={dataBurger}/>
             <BurgerIngredients dataBurger={dataBurger}/>
-        </div>
+        </main>
 
 
-    </main>
+    </div>
   );
 }
 

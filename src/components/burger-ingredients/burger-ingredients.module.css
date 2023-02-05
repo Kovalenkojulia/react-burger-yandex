@@ -1,0 +1,37 @@
+.order{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-left: 180px;
+}
+.scroller {
+    height: 530px;
+    padding: 5px;
+    overflow: scroll;
+
+}
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #8585AD;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.button {
+    margin-left: 50px;
+}
+
+.elements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.element {
+    margin-left: 30px;
+}

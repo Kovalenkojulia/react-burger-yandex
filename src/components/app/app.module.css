@@ -1,0 +1,10 @@
+.main {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    margin-top: 20px;
+}
+.title {
+    margin-left: 50px;
+}
+

@@ -2,6 +2,7 @@ import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-ta
 import styles from './burger-constructor.module.css'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import ItemConstructor from './item-constructor/item-constructor'
 
 const BurgerConstructor = ({dataBurger}) => {
     return (
@@ -15,17 +16,7 @@ const BurgerConstructor = ({dataBurger}) => {
             <div className={styles.item}>
                 {dataBurger.filter(data => data.type === 'bun').map((data) => {
                         return (
-                            <div key={data._id}>
-                                <img src={data.image} alt={'bun'}/>
-                                <div className={styles.icon}>
-                                    <p className="text text_type_digits-default">20</p>
-                                    <CurrencyIcon type="primary" />
-                                </div>
-
-                                <p className="text text_type_main-default">
-                                    {data.name}
-                                </p>
-                            </div>
+                           <ItemConstructor key={data._id} name={data.name} price ={data.price} image={data.image} calories={data.calories} carbohydrates={data.carbohydrates} proteins={data.proteins} fat={data.fat}/>
                         )
                     }
                 )
@@ -38,17 +29,7 @@ const BurgerConstructor = ({dataBurger}) => {
             <div className={styles.item}>
                 {dataBurger.filter(data => data.type === 'sauce').map((data) => {
                         return (
-                            <div key={data._id}>
-                                <img src={data.image} alt={'sauce'}/>
-                                <div className={styles.icon}>
-                                    <p className="text text_type_digits-default">20</p>
-                                    <CurrencyIcon type="primary" />
-                                </div>
-
-                                <p className="text text_type_main-default">
-                                    {data.name}
-                                </p>
-                            </div>
+                            <ItemConstructor key={data._id} name={data.name} price ={data.price} image={data.image} calories={data.calories} proteins={data.proteins} fat={data.fat} carbohydrates={data.carbohydrates} />
                         )}
                     )
                 }
@@ -61,17 +42,7 @@ const BurgerConstructor = ({dataBurger}) => {
                 <div className={styles.item}>
                     {dataBurger.filter(data => data.type === 'main').map((data) => {
                         return (
-                            <div key={data._id}>
-                                <img src={data.image} alt={'sauce'}/>
-                                <div className={styles.icon}>
-                                    <p className="text text_type_digits-default">20</p>
-                                    <CurrencyIcon type="primary" />
-                                </div>
-
-                                <p className="text text_type_main-default">
-                                    {data.name}
-                                </p>
-                            </div>
+                            <ItemConstructor key={data._id} name={data.name} price ={data.price} image={data.image} calories={data.calories} proteins={data.proteins} fat={data.fat} carbohydrates={data.carbohydrates}/>
                         )}
                     )
                     }
@@ -83,7 +54,7 @@ const BurgerConstructor = ({dataBurger}) => {
 }
 
 BurgerConstructor.propTypes = {
-    dataBurger: PropTypes.arrayOf(PropTypes.object)
+    dataBurger: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default BurgerConstructor

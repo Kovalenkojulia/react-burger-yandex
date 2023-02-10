@@ -7,6 +7,19 @@ import PropTypes from 'prop-types'
 
 const portal = document.getElementById('modal')
 const Modal = ({children, title, isOpen, onClose}) => {
+    useEffect(() => {
+        function closeByEscape(evt) {
+            if(evt.key === 'Escape') {
+                onClose();
+            }
+        }
+
+        document.addEventListener('keydown', closeByEscape);
+        return () => {
+            document.removeEventListener('keydown', closeByEscape);
+        }
+
+    }, [])
 
 
     if (!isOpen) {

@@ -32,7 +32,12 @@ function App() {
             setState({data: [], hasError: false, isLoading: true})
 
             fetch(dataUrl)
-                .then(res => res.json())
+                .then(res => {
+                    if (res.ok) {
+                        return res.json()
+                    }
+                    return Promise.reject(`Ошибка ${res.status}`)
+                })
                 .then(({data}) => setState((prevState) => ({...prevState, data: data || [], isLoading: false})))
                 .catch(e => {
                     setState((prevState) => ({...prevState, hasError: true, isLoading: false}))
@@ -64,10 +69,15 @@ function App() {
             <main className={styles.main}>
                 <BurgerConstructor dataBurger={dataBurger}/>
                 <BurgerIngredients dataBurger={dataBurger} isOpen={isOpen}/>
-                <Modal isOpen={isModalOpened} onClose={onClose}>
-                    <OrderDetails/>
-                    <IngredientDetails title={'Детали ингредиента'} dataBurger={dataBurger}/>
-                </Modal>
+                {isModalOpened & (
+                    <Modal onClose={onClose}>
+                        <OrderDetails />
+                        <IngredientDetails
+                            title={"Детали ингредиента"}
+                            dataBurger={dataBurger}
+                        />
+                    </Modal>
+                )}
             </main>
 
 

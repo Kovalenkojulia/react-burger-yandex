@@ -3,6 +3,7 @@ import styles from './burger-constructor.module.css'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
 import ItemConstructor from './item-constructor/item-constructor'
+import {ingredientType} from '../../utils/types'
 
 const BurgerConstructor = ({dataBurger}) => {
     return (
@@ -54,7 +55,7 @@ const BurgerConstructor = ({dataBurger}) => {
 }
 
 BurgerConstructor.propTypes = {
-    dataBurger: PropTypes.arrayOf(PropTypes.object).isRequired
+    dataBurger: ingredientType.isRequired
 }
 
 export default BurgerConstructor

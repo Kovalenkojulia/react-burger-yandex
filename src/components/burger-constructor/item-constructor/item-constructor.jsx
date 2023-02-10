@@ -5,6 +5,7 @@ import Modal from '../../modal/modal'
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
+
 const ItemConstructor = ({image, name, price, calories, proteins, fat, carbohydrates}) => {
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {
@@ -27,7 +28,7 @@ const ItemConstructor = ({image, name, price, calories, proteins, fat, carbohydr
                 {name}
             </p>
         </div>
-            <Modal isOpen={isModalOpened} onClose={onClose}>
+            <Modal isOpen={isModalOpened} onClose={onClose} title={'Детали ингредиента'} >
                 <IngredientDetails name={name} image={image} calories={calories} proteins={proteins} fat={fat} carbohydrates={carbohydrates}/>
             </Modal>
         </>

@@ -5,14 +5,15 @@ import ItemConstructor from '../burger-constructor/item-constructor/item-constru
 
 const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}) => {
     return (
-        <div>
-            <p className="text text_type_main-large">
-                Детали ингредиента
-            </p>
-            <img src={image} alt={'alt'}/>
-            <p className="text text_type_main-small">
-                {name}
-            </p>
+        <div >
+            <div className={styles.card}>
+                <img src={image} alt={'alt'} className={styles.image}/>
+                <p className="text text_type_main-small">
+                    {name}
+                </p>
+
+            </div>
+
             <div className={styles.details}>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
@@ -45,11 +46,11 @@ const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}
 }
 
 IngredientDetails.propTypes = {
-    image: PropTypes.string,
-    name: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
 }
 export default IngredientDetails

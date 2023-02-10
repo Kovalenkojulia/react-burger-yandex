@@ -8,6 +8,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
+import {ingredientType} from '../../utils/types'
 const BurgerIngredients = ({dataBurger, isOpen}) => {
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {
@@ -55,7 +56,6 @@ const BurgerIngredients = ({dataBurger, isOpen}) => {
         </div>
             <Modal isOpen={isModalOpened} onClose={onClose}>
                 <OrderDetails/>
-
             </Modal>
 
         </>
@@ -64,7 +64,7 @@ const BurgerIngredients = ({dataBurger, isOpen}) => {
 }
 
 BurgerIngredients.propTypes = {
-    dataBurger: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataBurger: ingredientType.isRequired,
     isOpen: PropTypes.func.isRequired
 }
 

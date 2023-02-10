@@ -3,9 +3,22 @@ import {Button, ConstructorElement, Counter, CurrencyIcon} from '@ya.praktikum/r
 import BunImage from '../../images/bun-02.png'
 import styles from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
+import {useState} from 'react'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
+import IngredientDetails from '../ingredient-details/ingredient-details'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
 const BurgerIngredients = ({dataBurger, isOpen}) => {
+    const [isModalOpened, setIsModalOpened] = useState(false)
+    const onOpen = () => {
+        setIsModalOpened(true)
+    }
+    const onClose = () => {
+        setIsModalOpened(false)
+    }
+
     return (
+        <>
         <div className={styles.elements}>
         <div className={styles.element}>
 
@@ -34,12 +47,18 @@ const BurgerIngredients = ({dataBurger, isOpen}) => {
         <p className="text text_type_digits-medium">610</p>
         <CurrencyIcon type="primary" />
         <div className={styles.button}>
-            <Button htmlType="button" type="primary" size="large" onClick={isOpen} >
+            <Button htmlType="button" type="primary" size="large" onClick={onOpen} >
                 Оформить заказ
             </Button>
         </div>
     </div>
         </div>
+            <Modal isOpen={isModalOpened} onClose={onClose}>
+                <OrderDetails/>
+
+            </Modal>
+
+        </>
 
     )
 }

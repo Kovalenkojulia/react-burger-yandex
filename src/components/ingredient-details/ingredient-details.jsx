@@ -1,6 +1,7 @@
 import styles from './ingredient-details.module.css'
 import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
+import ItemConstructor from '../burger-constructor/item-constructor/item-constructor'
 
 const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}) => {
     return (
@@ -44,11 +45,11 @@ const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}
 }
 
 IngredientDetails.propTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.string.isRequired,
-    proteins: PropTypes.string.isRequired,
-    fat: PropTypes.string.isRequired,
-    carbohydrates: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    calories: PropTypes.number,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
 }
 export default IngredientDetails

@@ -3,11 +3,11 @@ import React, {useState, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
-import styles from './app.module.css'
-//import {dataBurger} from '../../utils/data'
 import Modal from '../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import OrderDetails from '../order-details/order-details'
+
+import styles from './app.module.css'
 
 
 function App() {
@@ -33,12 +33,10 @@ function App() {
 
             fetch(dataUrl)
                 .then(res => res.json())
-                .then(({data}) => setState((prevState)=>({...prevState, data: data || [], isLoading: false})))
+                .then(({data}) => setState((prevState) => ({...prevState, data: data || [], isLoading: false})))
                 .catch(e => {
-                    setState((prevState)=>({...prevState, hasError: true, isLoading: false}))
+                    setState((prevState) => ({...prevState, hasError: true, isLoading: false}))
                 })
-
-
         }
 
         getDataBurger()
@@ -46,13 +44,12 @@ function App() {
 
 
     const {data, isLoading, hasError} = state
-    const dataBurger = data || [];
-    if(isLoading || dataBurger.length === 0){
+    const dataBurger = data || []
+    if (isLoading || dataBurger.length === 0) {
         return (
             <div>Loading</div>
         )
     }
-
 
 
     return (
@@ -69,7 +66,7 @@ function App() {
                 <BurgerIngredients dataBurger={dataBurger} isOpen={isOpen}/>
                 <Modal isOpen={isModalOpened} onClose={onClose}>
                     <OrderDetails/>
-                    <IngredientDetails dataBurger={dataBurger}/>
+                    <IngredientDetails title={'Детали ингредиента'} dataBurger={dataBurger}/>
                 </Modal>
             </main>
 

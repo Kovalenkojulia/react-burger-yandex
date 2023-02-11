@@ -6,7 +6,7 @@ import styles from './modal.module.css'
 import PropTypes from 'prop-types'
 
 const portal = document.getElementById('modal')
-const Modal = ({children, title, isOpen, onClose}) => {
+const Modal = ({children, title, onClose}) => {
     useEffect(() => {
         function closeByEscape(evt) {
             if(evt.key === 'Escape') {
@@ -22,9 +22,6 @@ const Modal = ({children, title, isOpen, onClose}) => {
     }, [])
 
 
-    if (!isOpen) {
-        return null
-    }
     return (
 
         createPortal(

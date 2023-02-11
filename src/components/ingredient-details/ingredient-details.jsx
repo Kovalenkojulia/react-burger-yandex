@@ -1,15 +1,16 @@
 import styles from './ingredient-details.module.css'
 import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
-import ItemConstructor from '../burger-constructor/item-constructor/item-constructor'
+import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
+import {ingredientType} from '../../utils/types'
 
-const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}) => {
+const IngredientDetails = ({data}) => {
     return (
         <div >
             <div className={styles.card}>
-                <img src={image} alt={'alt'} className={styles.image}/>
+                <img src={data.image} alt={'alt'} className={styles.image}/>
                 <p className="text text_type_main-small">
-                    {name}
+                    {data.name}
                 </p>
 
             </div>
@@ -19,25 +20,25 @@ const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}
                     <p className="text text_type_main-default text_color_inactive">
                         Калории,ккал
                     </p>
-                    <p className="text text_type_digits-default">{calories}</p>
+                    <p className="text text_type_digits-default">{data.calories}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Белки, г
                     </p>
-                    <p className="text text_type_digits-default">{proteins}</p>
+                    <p className="text text_type_digits-default">{data.proteins}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Жиры, г
                     </p>
-                    <p className="text text_type_digits-default">{fat}</p>
+                    <p className="text text_type_digits-default">{data.fat}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Углеводы, г
                     </p>
-                    <p className="text text_type_digits-default">{carbohydrates}</p>
+                    <p className="text text_type_digits-default">{data.carbohydrates}</p>
                 </div>
             </div>
 
@@ -46,11 +47,6 @@ const IngredientDetails = ({image, name, calories, proteins, fat, carbohydrates}
 }
 
 IngredientDetails.propTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
+    data: ingredientType.isRequired,
 }
 export default IngredientDetails

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
 
 import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
-import Modal from '../modal/modal'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import OrderDetails from '../order-details/order-details'
 
@@ -11,14 +10,6 @@ import styles from './app.module.css'
 
 
 function App() {
-    const [isModalOpened, setIsModalOpened] = useState(false)
-
-    const isOpen = () => {
-        setIsModalOpened(true)
-    }
-    const onClose = () => {
-        setIsModalOpened(false)
-    }
 
     const [state, setState] = useState({
         isLoading: false,
@@ -67,20 +58,9 @@ function App() {
 
             </div>
             <main className={styles.main}>
-                <BurgerConstructor dataBurger={dataBurger}/>
-                <BurgerIngredients dataBurger={dataBurger} isOpen={isOpen}/>
-                {isModalOpened & (
-                    <Modal onClose={onClose}>
-                        <OrderDetails />
-                        <IngredientDetails
-                            title={"Детали ингредиента"}
-                            dataBurger={dataBurger}
-                        />
-                    </Modal>
-                )}
+                <BurgerIngredients dataBurger={dataBurger}/>
+                <BurgerConstructor dataBurger={dataBurger} />
             </main>
-
-
         </div>
     )
 }

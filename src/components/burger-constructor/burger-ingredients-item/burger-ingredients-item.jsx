@@ -1,6 +1,5 @@
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
-import BurgerConstructor from '../../burger-constructor/burger-constructor'
 import {ingredientType} from '../../../utils/types'
 
 const BurgerIngredientsItem = ({dataBurger}) => {
@@ -29,7 +28,7 @@ const BurgerIngredientsItem = ({dataBurger}) => {
 }
 
 BurgerIngredientsItem.propTypes = {
-    dataBurger: ingredientType.isRequired
+    dataBurger: PropTypes.arrayOf(ingredientType).isRequired,
 }
 
 export default BurgerIngredientsItem;

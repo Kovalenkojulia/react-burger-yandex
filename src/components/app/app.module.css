@@ -7,4 +7,8 @@
 .title {
     margin-left: 50px;
 }
+.page {
+    margin: 0 auto;
+    max-width: 1480px;
+}
 

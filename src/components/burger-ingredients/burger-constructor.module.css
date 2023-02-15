@@ -6,12 +6,7 @@
     grid-row-gap: 0px;
     width: 600px;
 }
-.icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 50px;
-}
+
 
 .scroller {
     height: 750px;

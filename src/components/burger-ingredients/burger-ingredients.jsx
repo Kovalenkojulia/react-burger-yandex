@@ -1,49 +1,61 @@
-import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
-import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import BunImage from '../../images/bun-02.png'
-import styles from './burger-ingredients.module.css'
+import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-tab'
+import styles from './burger-constructor.module.css'
+import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
+import IngredientsItem from './item-constructor/ingredients-item'
+import {ingredientType} from '../../utils/types'
+
 const BurgerIngredients = ({dataBurger}) => {
-    console.log(dataBurger)
     return (
-        <div className={styles.elements}>
-        <div className={styles.element}>
-            <ConstructorElement
-                type="top"
-                isLocked={true}
-                text="Краторная булка N-200i (верх)"
-                price={200}
-                thumbnail={BunImage}
-            />
-        </div>
+        <div>
+            <BurgerConstructorTab />
             <div className={styles.scroller}>
-                <BurgerIngredientsItem dataBurger={dataBurger}/>
+            <p className="text text_type_main-medium mt-10">
+                Булки
+            </p>
+
+            <div className={styles.item}>
+                {dataBurger.filter(data => data.type === 'bun').map((data) => {
+                        return (
+                           <IngredientsItem key={data._id} data={data}/>
+                        )
+                    }
+                )
+                }
             </div>
-            <div className={styles.element}>
-            <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text="Краторная булка N-200i (низ)"
-                price={200}
-                thumbnail={BunImage}
-            />
+
+            <p className="text text_type_main-medium mt-10">
+                Соусы
+            </p>
+            <div className={styles.item}>
+                {dataBurger.filter(data => data.type === 'sauce').map((data) => {
+                        return (
+                            <IngredientsItem key={data._id} data={data} />
+                        )}
+                    )
+                }
             </div>
 
-    <div className={styles.order}>
-        <p className="text text_type_digits-medium">610</p>
-        <CurrencyIcon type="primary" />
-        <div className={styles.button}>
-            <Button htmlType="button" type="primary" size="large" >
-                Оформить заказ
-            </Button>
+                <p className="text text_type_main-medium mt-10">
+                    Начинки
+                </p>
+
+                <div className={styles.item}>
+                    {dataBurger.filter(data => data.type === 'main').map((data) => {
+                        return (
+                            <IngredientsItem key={data._id} data={data}/>
+                        )}
+                    )
+                    }
+                </div>
+
+            </div>
         </div>
-    </div>
-        </div>
-
-
-
     )
-
-
 }
 
-export default BurgerIngredients;
+BurgerIngredients.propTypes = {
+    dataBurger: PropTypes.arrayOf(ingredientType).isRequired,
+};
+
+export default BurgerIngredients

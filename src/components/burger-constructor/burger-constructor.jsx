@@ -3,11 +3,13 @@ import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-deve
 import BunImage from '../../images/bun-02.png'
 import styles from './burger-ingredients.module.css'
 import PropTypes from 'prop-types'
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import {ingredientType} from '../../utils/types'
-const BurgerConstructor = ({dataBurger}) => {
+import {DataContext} from '../../services/data-context'
+const BurgerConstructor = () => {
+    const {dataBurger} = useContext(DataContext)
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {
         setIsModalOpened(true)

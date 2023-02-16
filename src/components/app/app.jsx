@@ -6,6 +6,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import OrderDetails from '../order-details/order-details'
 
+import {DataContext} from '../../services/data-context'
+
 import styles from './app.module.css'
 
 
@@ -58,8 +60,10 @@ function App() {
 
             </div>
             <main className={styles.main}>
+                <DataContext.Provider value={{dataBurger}}>
                 <BurgerIngredients dataBurger={dataBurger}/>
-                <BurgerConstructor dataBurger={dataBurger} />
+                <BurgerConstructor />
+                </DataContext.Provider>
             </main>
         </div>
     )

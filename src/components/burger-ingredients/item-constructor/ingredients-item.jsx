@@ -8,6 +8,7 @@ import {ingredientType} from '../../../utils/types'
 
 
 const IngredientsItem = ({data}) => {
+    console.log(data)
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {
         setIsModalOpened(true)

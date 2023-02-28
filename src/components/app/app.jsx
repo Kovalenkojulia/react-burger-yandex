@@ -5,10 +5,11 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import OrderDetails from '../order-details/order-details'
-
 import {DataContext} from '../../services/data-context'
+import {HTML5Backend} from 'react-dnd-html5-backend'
 
 import styles from './app.module.css'
+import {DndProvider} from 'react-dnd'
 
 
 function App() {
@@ -61,8 +62,10 @@ function App() {
             </div>
             <main className={styles.main}>
                 <DataContext.Provider value={{dataBurger}}>
-                <BurgerIngredients dataBurger={dataBurger}/>
-                <BurgerConstructor />
+                    <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients dataBurger={dataBurger}/>
+                    <BurgerConstructor />
+                    </DndProvider>
                 </DataContext.Provider>
             </main>
         </div>
@@ -70,3 +73,4 @@ function App() {
 }
 
 export default App
+

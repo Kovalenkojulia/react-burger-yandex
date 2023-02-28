@@ -1,14 +1,20 @@
 import styles from './item-constructor.module.css'
-import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientDetails from '../../ingredient-details/ingredient-details'
 import Modal from '../../modal/modal'
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {ingredientType} from '../../../utils/types'
+import {useDrag} from 'react-dnd'
+import {useDispatch, useSelector} from 'react-redux'
 
 
-const IngredientsItem = ({data}) => {
-    console.log(data)
+
+const IngredientsItem = ({ingredient}) => {
+    const dispatch =useDispatch()
+    const countValue = useSelector((state) => state.ingredientsConstructor.counters[ingredient._id])
+    //console.log(countValue)
+
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {
         setIsModalOpened(true)
@@ -16,34 +22,39 @@ const IngredientsItem = ({data}) => {
     const onClose = () => {
         setIsModalOpened(false)
     }
+    const [, dragRef] = useDrag({
+        type: "ingredient",
+        item: ingredient,
+    });
 
     return (
         <>
-            <div onClick={onOpen}>
-                <img src={data.image} alt={data.name}/>
+            <div onClick={onOpen} className={styles.card}>
+                {countValue > 0 && <Counter count={countValue} size="default" extraClass="m-1" /> }
+
+
+                <img ref={dragRef} src={ingredient.image} alt={ingredient.name}/>
                 <div className={styles.icon}>
-                    <p className="text text_type_digits-default">{data.price}</p>
+                    <p className="text text_type_digits-default">{ingredient.price}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
 
                 <p className="text text_type_main-default">
-                    {data.name}
+                    {ingredient.name}
                 </p>
             </div>
             {
                 isModalOpened &&
                 <Modal onClose={onClose} title={'Детали ингредиента'}>
-                    <IngredientDetails data={data}/>
+                    <IngredientDetails data={ingredient}/>
                 </Modal>
             }
 
         </>
     )
 }
-
 IngredientsItem.propTypes = {
-    'data': ingredientType.isRequired,
+    ingredient: ingredientType.isRequired,
+};
 
-
-}
 export default IngredientsItem

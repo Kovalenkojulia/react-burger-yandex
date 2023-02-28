@@ -1,1 +1,19 @@
+.block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+.ingredients{
+display: flex;
+flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 
+}
+.icon {
+margin-top: 30px;
+}
+.ingredient {
+    margin-top: 10px;
+    width: 100%
+}

@@ -1,9 +1,19 @@
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './order-details.module.css'
-const OrderDetails = () => {
+import {useDispatch, useSelector} from 'react-redux'
+import {createOrder, getOrder} from '../../services/slices/orderSlice'
+import {useEffect} from 'react'
+
+const OrderDetails = ({orderId}) => {
+    //console.log(orderId)
+    const selectOrderNumber = state => state.order.order?.number;
+    const orderNumber = useSelector(selectOrderNumber);
+
+
+
     return (
         <div className={styles.order}>
-            <p className="text text_type_digits-large">034536</p>
+            <p className="text text_type_digits-large">{orderId}</p>
             <p className="text text_type_main-default mt-8 mb-15">
                 идентификатор заказа
             </p>

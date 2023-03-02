@@ -4,7 +4,7 @@ import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-u
 import PropTypes from 'prop-types'
 import IngredientsItem from './item-constructor/ingredients-item'
 import {useSelector, useDispatch} from 'react-redux'
-import {fetchIngredients} from '../../services/slices/burgerItemSlice'
+import {fetchIngredients} from '../../services/slices/ingredientsSlice'
 import React, {useEffect, useState} from 'react'
 import { useInView } from 'react-intersection-observer';
 

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const fetchIngredients = createAsyncThunk(
+export const fetchIngredients = createAsyncThunk(
     "ingredients/fetchIngredients",
     async (_, {rejectWithValue}) => {
         const response = await fetch(
@@ -44,6 +44,6 @@ const ingredientsSlice = createSlice({
             });
     },
 });
-export const getIngredients = (state) => state.data.ingredients;
+
 
 export default ingredientsSlice.reducer;

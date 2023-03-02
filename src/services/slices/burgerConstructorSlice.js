@@ -41,6 +41,7 @@ const burgerConstructorSlice = createSlice({
         resetConstructor: (state) => {
             state.fillings = initialState.fillings
             state.counters = initialState.counters
+            state.bun = initialState.bun
         }
     }
 })

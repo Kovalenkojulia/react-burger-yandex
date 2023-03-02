@@ -10,10 +10,10 @@ const BurgerConstructorTab = ({currentTab, onTabClick}) => {
             <Tab value="buns" active={currentTab === 'bun'} onClick={()=> onTabClick('bun')}>
                 Булки
             </Tab>
-            <Tab  value="two" active={currentTab === 'main'} onClick={()=> onTabClick('main')}>
+            <Tab  value="two" active={currentTab === 'sauce'} onClick={()=> onTabClick('main')}>
                 Соусы
             </Tab>
-            <Tab value="three" active={currentTab === 'sauce'} onClick={()=>onTabClick('sauce')}>
+            <Tab value="three" active={currentTab === 'main'} onClick={()=>onTabClick('sauce')}>
                 Начинки
             </Tab>
         </main>

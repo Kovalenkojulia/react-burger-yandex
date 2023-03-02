@@ -1,12 +1,9 @@
 import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
 import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import PropTypes from 'prop-types'
 import {useContext, useEffect, useMemo, useState} from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import {ingredientType} from '../../utils/types'
-import {DataContext} from '../../services/data-context'
 import {useDispatch, useSelector} from 'react-redux'
 import {
     addIngredient,
@@ -18,29 +15,16 @@ import {
 import {useDrop} from 'react-dnd'
 import {nanoid} from '@reduxjs/toolkit'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
+import {resetOrder} from '../../services/slices/orderSlice'
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
     const totalPrice = useSelector(getTotalPrice)
     const bun = useSelector(getConstructorBun)
-    const {data, loading, error} = useSelector((state) => state.ingredients)
     const fillings = useSelector(getConstructorFillings)
-    //console.log(fillings)
-    const firstBun = data.find((ingredient) => ingredient.type === 'bun')
-    //const ingredients = data.map(item => item._id)
-    //console.log(ingredients)
-
     const [isModalOpened, setIsModalOpened] = useState(false)
     const order = useSelector(getOrder)
-    //console.log(order)
     const orderId = order?.order?.number
-
-
-    useEffect(() => {
-        if (firstBun && !bun) {
-            dispatch(addIngredient(firstBun))
-        }
-    }, [firstBun, dispatch, bun])
 
 
     const [, dropTargetRef] = useDrop({
@@ -60,7 +44,7 @@ const BurgerConstructor = () => {
     }
 
     const handleOrderClick = () => {
-        if (order) {
+        if (orderId) {
             setIsModalOpened(true)
         } else {
             dispatch(createOrder({
@@ -73,13 +57,13 @@ const BurgerConstructor = () => {
         }
     }
 
-    const handleClose = () => {
-        if (order) {
-            dispatch(resetConstructor())
-            setIsModalOpened(false)
-        }
-    }
 
+    const handleClose = () => {
+        if (!order) return;
+        dispatch(resetConstructor());
+        setIsModalOpened(false);
+        dispatch(resetOrder())
+    }
 
     return (
         <>
@@ -128,7 +112,7 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium">{totalPrice}</p>
                     <CurrencyIcon type="primary"/>
                     <div className={styles.button}>
-                        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick}>
+                        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick} disabled={!bun || !fillings.length}>
                             Оформить заказ
                         </Button>
                     </div>

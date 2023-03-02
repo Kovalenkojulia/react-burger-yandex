@@ -1,40 +1,9 @@
 import {createSlice, createAsyncThunk, isRejectedWithValue} from '@reduxjs/toolkit'
 
-/*export const createOrder = createAsyncThunk(
-    'order/createOrder',
-    async ({ ingredients }) => {
-        //console.log(ingredients)
-        const url = 'https://norma.nomoreparties.space/api/orders';
-
-        //let ingredientsId = []
-        //ingredients.map((item)=> {ingredientsId.push(item?._id)})
-        const order = {
-             "ingredients": ["609646e4dc916e00276b286e","609646e4dc916e00276b2870"]
-            //'ingredients': ingredientsId
-        }
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({order}),
-        });
-
-        if (!response.ok) {
-            const { message } = await response.json();
-            throw new Error(message);
-        }
-
-        //const orderIngredients = order.ingredients.map((ingredient) => ingredient._id);
-        //const updatedOrder = { ...order, ingredients: orderIngredients };
-
-        return { order};
-    },
-);*/
 
 export const createOrder = createAsyncThunk(
     'order/createOrder',
-    async (ingredients) => {
+    async (ingredients, { rejectWithValue }) => {
         try {
             const response = await fetch('https://norma.nomoreparties.space/api/orders', {
                 headers: {
@@ -46,7 +15,7 @@ export const createOrder = createAsyncThunk(
             const data = await response.json();
             return data;
         } catch (error) {
-            // Обработка ошибок
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -59,21 +28,23 @@ export const createOrder = createAsyncThunk(
         isLoading: false,
         error: null,
     },
-    reducers: {},
+    reducers: {
+        resetOrder: (state) => {
+            state.order = null;
+            state.isLoading = false;
+            state.error = null;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(createOrder.pending, (state) => {
-            console.log('createOrder is pending');
             state.isLoading = true;
         });
         builder.addCase(createOrder.fulfilled, (state, action) => {
-            console.log('createOrder is fulfilled');
-            console.log('data', action.payload.order);
             state.order = action.payload;
             state.isLoading = false;
             state.error = null;
         });
         builder.addCase(createOrder.rejected, (state, action) => {
-            console.log('createOrder is rejected');
             state.isLoading = false;
             state.error = action.payload;
         });
@@ -82,5 +53,6 @@ export const createOrder = createAsyncThunk(
 
 
 export default orderSlice.reducer;
+export const { resetOrder } = orderSlice.actions;
 
 export const getOrder = state => state.order.order

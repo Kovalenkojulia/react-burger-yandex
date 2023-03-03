@@ -1,7 +1,7 @@
 import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
 import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import {useContext, useEffect, useMemo, useState} from 'react'
+import {useContext, useEffect, useMemo, useRef, useState} from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import {useDispatch, useSelector} from 'react-redux'
@@ -22,9 +22,10 @@ const BurgerConstructor = () => {
     const totalPrice = useSelector(getTotalPrice)
     const bun = useSelector(getConstructorBun)
     const fillings = useSelector(getConstructorFillings)
-    const [isModalOpened, setIsModalOpened] = useState(false)
     const order = useSelector(getOrder)
     const orderId = order?.order?.number
+    const modalRef = useRef()
+
 
 
     const [, dropTargetRef] = useDrop({
@@ -45,7 +46,6 @@ const BurgerConstructor = () => {
 
     const handleOrderClick = () => {
         if (orderId) {
-            setIsModalOpened(true)
         } else {
             dispatch(createOrder({
                 ingredients: [
@@ -61,7 +61,6 @@ const BurgerConstructor = () => {
     const handleClose = () => {
         if (!order) return;
         dispatch(resetConstructor());
-        setIsModalOpened(false);
         dispatch(resetOrder())
     }
 
@@ -118,7 +117,7 @@ const BurgerConstructor = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpened && (
+            {orderId && (
                 <Modal onClose={handleClose}>
                     <OrderDetails orderId={orderId}/>
                 </Modal>

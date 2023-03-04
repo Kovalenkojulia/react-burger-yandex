@@ -1,10 +1,9 @@
 import styles from './ingredient-details.module.css'
-import PropTypes from 'prop-types'
-import Modal from '../modal/modal'
-import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
 import {ingredientType} from '../../utils/types'
-
 const IngredientDetails = ({data}) => {
+
+
+
     return (
         <div >
             <div className={styles.card}>
@@ -44,6 +43,7 @@ const IngredientDetails = ({data}) => {
 
         </div>
     )
+
 }
 
 IngredientDetails.propTypes = {

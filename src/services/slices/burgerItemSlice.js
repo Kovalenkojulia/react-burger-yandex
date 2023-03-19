@@ -1,25 +1,31 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 
+const initialState = {
+    ingredient: null,
+    isModalOpened: false
+}
+
 
    export const burgerItemSlice = createSlice({
     name: 'burgerItem',
-    initialState: {
-        //ingredients: null,
-        //loading: false,
-        //error: null,
-        isModalOpened: false
-    },
+    initialState,
     reducers: {
         openModal: (state) => {
             state.isModalOpened = true
         },
         closeModal: (state) => {
             state.isModalOpened = false
+        },
+        setActiveIngredient: (state, {payload}) => {
+            state.ingredient = payload
+        },
+        resetActiveIngredient: (state) =>{
+            state.ingredient = initialState.ingredient
         }
     },
 
 })
 
-export const {openModal, closeModal} = burgerItemSlice.actions
+export const {openModal, closeModal, resetActiveIngredient, setActiveIngredient} = burgerItemSlice.actions
 
 

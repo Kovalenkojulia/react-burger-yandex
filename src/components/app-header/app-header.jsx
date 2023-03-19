@@ -1,5 +1,6 @@
 import {BurgerIcon, Button, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css'
+import {Link} from 'react-router-dom'
 const AppHeader = () => {
     return (
 
@@ -29,9 +30,11 @@ const AppHeader = () => {
 
             <div className={styles.item}>
                 <ProfileIcon type="primary" />
+                <Link to={'/profile'}>
                 <Button htmlType="button" type="secondary" size="large">
                     Личный кабинет
                 </Button>
+                </Link>
 
             </div>
 

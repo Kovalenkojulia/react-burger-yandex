@@ -11,6 +11,8 @@ import { useInView } from 'react-intersection-observer';
 const BurgerIngredients = () => {
     const dispatch = useDispatch()
     const {data, loading, error} = useSelector((state) => state.ingredients)
+
+
     useEffect(() => {
         dispatch(fetchIngredients());
 

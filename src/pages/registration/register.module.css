@@ -1,0 +1,25 @@
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.title {
+    margin-left: 158px;
+}
+
+
+.btn {
+    margin-bottom: 80px;
+    margin-left: 120px;
+}

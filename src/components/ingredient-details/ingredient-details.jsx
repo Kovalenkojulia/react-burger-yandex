@@ -2,16 +2,20 @@ import styles from './ingredient-details.module.css'
 import {ingredientType} from '../../utils/types'
 
 import {useDispatch, useSelector} from 'react-redux'
-import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredientSlice'
+import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredient'
 import {useParams} from 'react-router-dom'
 import {fetchIngredients, getIngredients} from '../../services/slices/ingredientsSlice'
 import {useEffect} from 'react'
 import clsx from 'clsx'
 
-const IngredientDetails = ({data, outsideModal}) => {
+const IngredientDetails = ({ outsideModal}) => {
     const dispatch = useDispatch()
-    const ingredients = useSelector(getIngredients)
+    //const ingredients = useSelector(getIngredients)
+    const ingredients = useSelector((state) => state.ingredients.data)
     const ingredient = useSelector(getActiveIngredient)
+    console.log(ingredients)
+
+
     const {id} = useParams()
 
     useEffect(() => {
@@ -19,6 +23,7 @@ const IngredientDetails = ({data, outsideModal}) => {
             dispatch(fetchIngredients())
         }
         if(ingredients.length && !ingredient){
+            console.log('id:', id);
             dispatch(
                 setActiveIngredient(
                     ingredients.find((ingredient)=>{

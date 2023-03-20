@@ -4,12 +4,12 @@ const initialState = {
     ingredient: null
 }
 
-const ingredientSlice = createSlice({
+const ingredient = createSlice({
     name: 'ingredient',
     initialState,
     reducers: {
-        setActiveIngredient: (state) => {
-            state.ingredient = state.action.payload
+        setActiveIngredient: (state, {payload}) => {
+            state.ingredient = payload
 
         },
         resetActiveIngredient: (state) => {
@@ -18,8 +18,8 @@ const ingredientSlice = createSlice({
     }
 })
 
-export default ingredientSlice.reducer
+export default ingredient.reducer
 
-export const {setActiveIngredient, resetActiveIngredient } = ingredientSlice.actions
+export const {setActiveIngredient, resetActiveIngredient } = ingredient.actions
 
 export const getActiveIngredient = state => state.ingredient.ingredient

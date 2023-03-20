@@ -22,7 +22,7 @@ const ProtectedRoute =({onlyUnAuth=false, element})=>{
     }
 
     if (!user && !onlyUnAuth) {
-        return <Navigate to={'login'}  />
+        return <Navigate to={'/login'}  />
 
     }
 

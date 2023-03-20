@@ -14,7 +14,7 @@ import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import Layout from '../layout/layout'
 import {useDispatch, useSelector} from 'react-redux'
 import {getCurrentUser, getUser} from '../../services/slices/userSlice'
-import {Profile} from '../../pages/profile/profile'
+
 import ProtectedRoute from '../protected-route/protected-route'
 import {LoginPage} from '../../pages/login/login'
 import {Register} from '../../pages/registration/register'
@@ -22,6 +22,8 @@ import {resetActiveIngredient} from '../../services/slices/ingredient'
 import Modal from '../modal/modal'
 import {ForgotPassword} from '../../pages/forgot-password/forgot-password'
 import {ResetPassword} from '../../pages/reset-password/reset-password'
+import {Profile} from '../../pages/profile/profile'
+
 
 
 function App() {
@@ -53,8 +55,8 @@ function App() {
 
             <Route path={'/'} element={<Layout/>}>
             <Route path={'/'} element={<MainPage/>}/>
-                <Route path={'/profile'}  element={<ProtectedRoute element={<Profile/>}/>}/>
-                <Route path={'/login'} element={<ProtectedRoute element={<LoginPage/> } />}/>
+                <Route path={'/profile'}  element={<ProtectedRoute element={<Profile/>}/> }/>
+                <Route path={'/login'} element={<LoginPage/> }/>
                 <Route path={'/register'} element={<ProtectedRoute element={<Register/> } />} />
                 <Route path={'/forgot-password'} element={<ProtectedRoute element={<ForgotPassword/>} />}  />
                 <Route path={'/reset-password'} element={<ProtectedRoute element={<ResetPassword/>}/> }/>

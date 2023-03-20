@@ -9,10 +9,7 @@ import clsx from 'clsx'
 
 
 export function Profile() {
-    const [value, setValue] = useState('bob@example.com')
-    const onChange = e => {
-        setValue(e.target.value)
-    }
+
     const inputRef = useRef(null)
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
@@ -21,16 +18,16 @@ export function Profile() {
 
     const dispatch = useDispatch()
     const user = useSelector(getCurrentUser)
-    const { values, handleChange, setStarterValues } = useForm()
+    const { values, handleChange, setStartingValues } = useForm()
     let {name = '', email = '', password = ''} = values
-    const isEditMode = user?.name != name || user?.email !== email || password
+    const isEditMode = user?.name !== name || user?.email !== email || password
     const error = useSelector(getUpdateUserError)
 
     useEffect(()=>{
         if(user){
-            setStarterValues(user);
+            setStartingValues(user);
         }
-    }, [user, setStarterValues])
+    }, [user, setStartingValues])
 
     const linkClassName = ({isActive})=>{
         return clsx(
@@ -44,7 +41,7 @@ export function Profile() {
 
     const handleReset = () => {
         if (user) {
-            setStarterValues(user)
+            setStartingValues(user)
         }
     }
     const handleSubmit = (event) => {
@@ -52,37 +49,37 @@ export function Profile() {
         dispatch(updateUser(values))
     }
     return (
-        <>
-            <div className={styles.links}>
-               <Link exact to={'/profile'} className={`${styles.link} ${styles.profileLink}`} activeClassName={styles.activeLink} >
-                   <p className="text text_type_main-medium ">
-                       Профиль
-                   </p>
+        <main className={styles.page}>
+            <div>
+                <nav>
+                    <ul>
+                        <li className={styles.profileLink}>
+                            <NavLink to={'/profile'} className={linkClassName} >
+                                Профиль
+                            </NavLink>
+                        </li>
+                        <li className={styles.profileLink}>
+                            <NavLink to={'/orders'} className={linkClassName}>
+                                История заказов
+                            </NavLink>
+                        </li>
+                        <li className={styles.profileLink}>
+                            <NavLink to={'/logout'} className={linkClassName} >
+                            <button className={clsx(styles.button, "text text_type_main-medium ")} onClick={handleLogout}>
+                                Выход
+                            </button>
 
-               </Link>
-                <NavLink exact to={'/profile/orders'} className={styles.link} activeClassName={styles.activeLink}>
-                    <p className="text text_type_main-medium ">
-                        История заказов
-                    </p>
+                        </NavLink>
+                        </li>
+                    </ul>
+                </nav>
 
-                </NavLink>
-                <NavLink to={'/logout'} className={styles.link} activeClassName={styles.activeLink} >
-                    <button className={clsx(styles.btn, "text text_type_main-medium ")} onClick={handleLogout}>
-                        Выход
-                    </button>
-
-                </NavLink>
-
-                <div className={styles.text}>
-                    <p className="text text_type_main-small ">
-                        В этом разделе вы можете
-                        изменить свои персональные данные
-                    </p>
-                </div>
-
+                <p className="text text_type_main-default text_color_inactive mt-20">
+                    В этом разделе вы можете изменить свои персональные данные
+                </p>
             </div>
 
-            <form className={styles.input} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <Input
                     type={'text'}
                     placeholder={'Имя'}
@@ -116,13 +113,8 @@ export function Profile() {
                         {error.message}
                     </p>
                 )}
-                {error && (
-                    <p className="text text_type_main-default text_color_error">
-                        {error.message}
-                    </p>
-                )}
                 {isEditMode && (
-                    <div>
+                    <div className={styles.buttons}>
                         <Button htmlType={'reset'} type={'secondary'} onClick={handleReset}>
                             Отмена
                         </Button>
@@ -130,10 +122,8 @@ export function Profile() {
                     </div>
                 )}
 
-
-
             </form>
-        </>
+        </main>
 
     )
 }

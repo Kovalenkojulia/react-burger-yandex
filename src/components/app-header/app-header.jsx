@@ -29,7 +29,7 @@ const AppHeader = () => {
                     </div>
 
                     <div className={styles.item}>
-                        <NavLink to={'orders'} className={linkClassName}>
+                        <NavLink to={'/orders'} className={linkClassName}>
                             {(isActive)=>(
                                 <>
                                     <ListIcon type="primary" />
@@ -53,9 +53,9 @@ const AppHeader = () => {
 
             <div className={styles.item}>
                 <NavLink to={'/profile'} className={linkClassName}>
-                    {(isActive)=>(
+                    {({isActive})=>(
                         <>
-                            <ProfileIcon type="primary" />
+                            <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
 
                                 <Button htmlType="button" type="secondary" size="large">
                                     Личный кабинет

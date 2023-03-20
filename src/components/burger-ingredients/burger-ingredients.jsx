@@ -62,7 +62,7 @@ const BurgerIngredients = () => {
                         <div className={styles.item} key={'bun'} id={'bun'} >
                             {data.filter(el => el.type === 'bun').map((el) =>
                                      (
-                                         <Link to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
+                                         <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
 
                                         <IngredientsItem key={el._id} ingredient={el} titile={'Булки'} type='bun'
                                          />
@@ -83,7 +83,7 @@ const BurgerIngredients = () => {
                         <div className={styles.item} key={'sauce'} id={'sauce'} >
                             {data.filter(el => el.type === 'sauce').map((el) =>
                                  (
-                                    <Link to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
+                                    <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el} title={'Соусы'}
                                                      type='sauce'  />
                                     </Link>
@@ -101,7 +101,7 @@ const BurgerIngredients = () => {
                         <div className={styles.item} key={'main'} id={'main'} >
                             {data.filter(el => el.type === 'main').map((el) =>
                                  (
-                                    <Link to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
+                                    <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el}
                                                      title={'Начинки'}
                                                      type='main'

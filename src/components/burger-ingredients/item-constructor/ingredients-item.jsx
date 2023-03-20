@@ -43,12 +43,7 @@ const IngredientsItem = ({ingredient}) => {
                     {ingredient.name}
                 </p>
             </div>
-            {
-                isModalOpened &&
-                <Modal onClose={onClose} title={'Детали ингредиента'}>
-                    <IngredientDetails data={ingredient}/>
-                </Modal>
-            }
+
 
         </>
     )

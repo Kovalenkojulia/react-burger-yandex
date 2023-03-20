@@ -21,7 +21,8 @@ export function ResetPassword () {
         }
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
         dispatch(resetPassword({ password, token })).then(({ payload }) => {
             if (payload?.success) {
                 navigate("/login", { replace: true });
@@ -37,7 +38,7 @@ export function ResetPassword () {
                     Восстановление пароля
                 </p>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
 
                <PasswordInput
                    onChange={handleChange}

@@ -14,7 +14,8 @@ export function Register(){
     const { values, handleChange } = useForm();
     const { name = "", email = "", password = "" } = values;
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
         dispatch(registerUser(values)).then(({ payload }) => {
             if (payload?.success) {
                 navigate("/", {

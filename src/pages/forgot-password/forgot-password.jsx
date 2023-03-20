@@ -13,7 +13,8 @@ export function ForgotPassword () {
     const {values, handleChange} = useForm()
     const {email=''} = values
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
         dispatch(forgotPassword(email)).then(({ payload }) => {
             if (payload?.success) {
                 navigate("/reset-password", {
@@ -34,15 +35,19 @@ export function ForgotPassword () {
                     Восстановление пароля
                 </p>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
 
             <EmailInput
                 onChange={handleChange}
-                name={'e-mail'}
-                isIcon={false}
+                name={'email'}
                 value={email}
                 placeholder="Укажите e-mail"
             />
+                {error && (
+                    <p className="text text_type_main-default text_color_error">
+                        {error.message}
+                    </p>
+                )}
             <div className={styles.btn}>
                 <Button htmlType="submit" type="primary" size="medium">
                     Восстановить

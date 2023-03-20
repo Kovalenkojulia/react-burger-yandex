@@ -22,3 +22,7 @@
     height: 240px;
 
 }
+.containerOutsideModal {
+    height: calc(100vh - 90px);
+}
+

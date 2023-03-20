@@ -47,7 +47,8 @@ export function Profile() {
             setStarterValues(user)
         }
     }
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
         dispatch(updateUser(values))
     }
     return (

@@ -13,7 +13,8 @@ export function LoginPage() {
     const { values, handleChange } = useForm();
     const { email = "", password = "" } = values;
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault()
         dispatch(loginUser(values));
     };
 

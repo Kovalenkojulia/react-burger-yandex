@@ -25,7 +25,7 @@ export function Register(){
         });
     };
     return(
-        <div>
+        <div className={styles.main}>
 
             <div className={styles.title}>
                 <p className="text text_type_main-medium">

@@ -1,3 +1,11 @@
+.main {
+    width: 480px;
+    margin: 180px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
 .btns {
     display: flex;
     align-items: center;
@@ -13,13 +21,10 @@
     align-items: center;
 }
 
-.title {
-    margin-left: 650px;
-    margin-bottom: 24px;
-}
+
 
 
 .btn {
     margin-bottom: 80px;
-    margin-left: 120px;
+
 }

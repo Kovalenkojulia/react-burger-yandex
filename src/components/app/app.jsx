@@ -56,10 +56,10 @@ function App() {
             <Route path={'/'} element={<Layout/>}>
             <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/profile'}  element={<ProtectedRoute element={<Profile/>}/> }/>
-                <Route path={'/login'} element={<LoginPage/> }/>
-                <Route path={'/register'} element={<ProtectedRoute element={<Register/> } />} />
-                <Route path={'/forgot-password'} element={<ProtectedRoute element={<ForgotPassword/>} />}  />
-                <Route path={'/reset-password'} element={<ProtectedRoute element={<ResetPassword/>}/> }/>
+                <Route path={'/login'}  element={<ProtectedRoute onlyUnAuth element={<LoginPage/>} /> }/>
+                <Route path={'/register'} element={<ProtectedRoute onlyUnAuth element={<Register/> } />} />
+                <Route path={'/forgot-password'} element={<ProtectedRoute onlyUnAuth element={<ForgotPassword/>} />}  />
+                <Route path={'/reset-password'} element={<ProtectedRoute onlyUnAuth element={<ResetPassword/>}/> }/>
                 <Route path={'/ingredients/:id'} element={<IngredientDetails outsideModal/>}/>
                 <Route />
             </Route>

@@ -18,11 +18,11 @@ const ProtectedRoute =({onlyUnAuth=false, element})=>{
 
 
     if (user && onlyUnAuth) {
-        return <Navigate to={ '/'} />
+        return <Navigate to={location?.state?.form || '/'} />
     }
 
     if (!user && !onlyUnAuth) {
-        return <Navigate to={'/login'}  />
+        return <Navigate to={'/login'} state={{target: location}} />
 
     }
 

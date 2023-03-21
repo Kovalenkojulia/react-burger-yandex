@@ -64,7 +64,7 @@ export function Profile() {
                             </NavLink>
                         </li>
                         <li className={styles.profileLink}>
-                            <NavLink to={'/logout'} className={linkClassName} >
+                            <NavLink to={'/login'} className={linkClassName} >
                             <button className={clsx(styles.button, "text text_type_main-medium ")} onClick={handleLogout}>
                                 Выход
                             </button>

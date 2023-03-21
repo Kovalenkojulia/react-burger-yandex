@@ -1,15 +1,52 @@
 import styles from './ingredient-details.module.css'
 import {ingredientType} from '../../utils/types'
-const IngredientDetails = ({data}) => {
+
+import {useDispatch, useSelector} from 'react-redux'
+import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredient'
+import {useParams} from 'react-router-dom'
+import {fetchIngredients, getIngredients} from '../../services/slices/ingredientsSlice'
+import {useEffect} from 'react'
+import clsx from 'clsx'
+
+const IngredientDetails = ({ outsideModal}) => {
+    const dispatch = useDispatch()
+    //const ingredients = useSelector(getIngredients)
+    const ingredients = useSelector((state) => state.ingredients.data)
+    const ingredient = useSelector(getActiveIngredient)
+    console.log(ingredients)
+
+
+    const {id} = useParams()
+
+    useEffect(() => {
+        if(!ingredients.length){
+            dispatch(fetchIngredients())
+        }
+        if(ingredients.length && !ingredient){
+            console.log('id:', id);
+            dispatch(
+                setActiveIngredient(
+                    ingredients.find((ingredient)=>{
+                        return ingredient._id === id
+                    })
+                )
+            )
+        }
+    }, [dispatch, ingredients, id, ingredient])
 
 
 
     return (
         <div >
-            <div className={styles.card}>
-                <img src={data.image} alt={'alt'} className={styles.image}/>
+            <div className={clsx( styles.card, {
+                [styles.containerOutsideModal]: outsideModal,
+            })}>
+                {outsideModal && (
+                    <h1 className="text text_type_main-large">Детали ингредиента</h1>
+                )}
+                <img src={ingredient?.image_large} alt={'alt'} className={styles.image}/>
                 <p className="text text_type_main-small">
-                    {data.name}
+                    {ingredient?.name}
                 </p>
 
             </div>
@@ -19,25 +56,25 @@ const IngredientDetails = ({data}) => {
                     <p className="text text_type_main-default text_color_inactive">
                         Калории,ккал
                     </p>
-                    <p className="text text_type_digits-default">{data.calories}</p>
+                    <p className="text text_type_digits-default">{ingredient?.calories}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Белки, г
                     </p>
-                    <p className="text text_type_digits-default">{data.proteins}</p>
+                    <p className="text text_type_digits-default">{ingredient?.proteins}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Жиры, г
                     </p>
-                    <p className="text text_type_digits-default">{data.fat}</p>
+                    <p className="text text_type_digits-default">{ingredient?.fat}</p>
                 </div>
                 <div className={styles.item}>
                     <p className="text text_type_main-default text_color_inactive">
                         Углеводы, г
                     </p>
-                    <p className="text text_type_digits-default">{data.carbohydrates}</p>
+                    <p className="text text_type_digits-default">{ingredient?.carbohydrates}</p>
                 </div>
             </div>
 
@@ -47,6 +84,6 @@ const IngredientDetails = ({data}) => {
 }
 
 IngredientDetails.propTypes = {
-    data: ingredientType.isRequired,
+    data: ingredientType,
 }
 export default IngredientDetails

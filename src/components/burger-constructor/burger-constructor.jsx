@@ -16,15 +16,20 @@ import {useDrop} from 'react-dnd'
 import {nanoid} from '@reduxjs/toolkit'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
 import {resetOrder} from '../../services/slices/orderSlice'
+import {getCurrentUser} from '../../services/slices/userSlice'
+import {useNavigate} from 'react-router-dom'
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
+    const user = useSelector(getCurrentUser)
+    const navigate = useNavigate()
     const totalPrice = useSelector(getTotalPrice)
     const bun = useSelector(getConstructorBun)
     const fillings = useSelector(getConstructorFillings)
     const order = useSelector(getOrder)
     const orderId = order?.order?.number
     const modalRef = useRef()
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
 
 
@@ -45,8 +50,12 @@ const BurgerConstructor = () => {
     }
 
     const handleOrderClick = () => {
-        if (orderId) {
+
+
+        if (!user) {
+            navigate('/login')
         } else {
+            setIsModalVisible(true)
             dispatch(createOrder({
                 ingredients: [
                     bun._id,

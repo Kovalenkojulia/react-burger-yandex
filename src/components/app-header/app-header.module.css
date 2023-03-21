@@ -15,3 +15,11 @@
     display: flex;
     align-items: center;
 }
+
+.menuLink {
+    color: #F2F2F3;
+}
+
+.menuLink_inactive {
+    color: #8585AD;
+}

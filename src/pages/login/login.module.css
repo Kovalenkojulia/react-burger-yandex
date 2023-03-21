@@ -1,0 +1,26 @@
+.wrapper{
+
+   width: 480px;
+    margin: 180px auto 0;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+.btn {
+    margin-bottom: 80px;
+    margin-left: 176px;
+}
+.title {
+    margin-left: 196px;
+}

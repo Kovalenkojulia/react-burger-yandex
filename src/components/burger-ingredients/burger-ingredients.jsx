@@ -7,10 +7,14 @@ import {useSelector, useDispatch} from 'react-redux'
 import {fetchIngredients} from '../../services/slices/ingredientsSlice'
 import React, {useEffect, useState} from 'react'
 import { useInView } from 'react-intersection-observer';
+import {Link, useLocation} from 'react-router-dom'
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch()
+    const location = useLocation()
     const {data, loading, error} = useSelector((state) => state.ingredients)
+
+
     useEffect(() => {
         dispatch(fetchIngredients());
 
@@ -56,12 +60,17 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'bun'} id={'bun'} >
-                            {data.filter(el => el.type === 'bun').map((el) => {
-                                    return (
+                            {data.filter(el => el.type === 'bun').map((el) =>
+                                     (
+                                         <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
+
                                         <IngredientsItem key={el._id} ingredient={el} titile={'Булки'} type='bun'
                                          />
+                                         </Link>
+
+
                                     )
-                                }
+
                             )
                             }
                         </div>
@@ -72,11 +81,13 @@ const BurgerIngredients = () => {
                             Соусы
                         </p>
                         <div className={styles.item} key={'sauce'} id={'sauce'} >
-                            {data.filter(el => el.type === 'sauce').map((el) => {
-                                return (
+                            {data.filter(el => el.type === 'sauce').map((el) =>
+                                 (
+                                    <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el} title={'Соусы'}
                                                      type='sauce'  />
-                                )}
+                                    </Link>
+                                )
                             )
                             }
                         </div>
@@ -88,13 +99,15 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'main'} id={'main'} >
-                            {data.filter(el => el.type === 'main').map((el) => {
-                                return (
+                            {data.filter(el => el.type === 'main').map((el) =>
+                                 (
+                                    <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el}
                                                      title={'Начинки'}
                                                      type='main'
                                     />
-                                )}
+                                    </Link>
+                                )
                             )
                             }
                         </div>

@@ -1,37 +1,70 @@
 import {BurgerIcon, Button, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css'
+import {Link, NavLink} from 'react-router-dom'
+import clsx from 'clsx'
 const AppHeader = () => {
+    const linkClassName = ({isActive}) => {
+        return clsx(styles.menuLink,{
+            [styles.menuLink_inactive]: !isActive
+        })
+    }
     return (
 
         <header className={styles.header}>
 
                 <div className={styles.items}>
                     <div className={styles.item}>
-                        <BurgerIcon type="primary" />
-                        <Button htmlType="button" type="secondary" size="large">
-                            Конструктор
-                        </Button>
+                        <NavLink to={'/'} className={linkClassName}>
+                            {(isActive)=>(
+                                <>
+                                    <BurgerIcon type="primary" />
+                                    <Button htmlType="button" type="secondary" size="large">
+                                        Конструктор
+                                    </Button>
+                                </>
+                            )}
+                        </NavLink>
+
+
                     </div>
 
                     <div className={styles.item}>
-                        <ListIcon type="primary" />
-                        <Button htmlType="button" type="secondary" size="large">
-                            Лента заказов
-                        </Button>
+                        <NavLink to={'/orders'} className={linkClassName}>
+                            {(isActive)=>(
+                                <>
+                                    <ListIcon type="primary" />
+                                    <Button htmlType="button" type="secondary" size="large">
+                                        Лента заказов
+                                    </Button>
+                                </>
+                            )}
+                        </NavLink>
+
                     </div>
                     <div className={'ml-20'}>
-                        <Logo />
+                        <Link to={'/'}>
+                            <Logo />
+                        </Link>
+
 
                     </div>
 
                 </div>
 
-
             <div className={styles.item}>
-                <ProfileIcon type="primary" />
-                <Button htmlType="button" type="secondary" size="large">
-                    Личный кабинет
-                </Button>
+                <NavLink to={'/profile'} className={linkClassName}>
+                    {({isActive})=>(
+                        <>
+                            <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+
+                                <Button htmlType="button" type="secondary" size="large">
+                                    Личный кабинет
+                                </Button>
+
+                        </>
+                    )}
+                </NavLink>
+
 
             </div>
 

@@ -12,3 +12,8 @@
     max-width: 1480px;
 }
 
+.burger {
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+}

@@ -7,12 +7,16 @@ import PropTypes from 'prop-types'
 import {ingredientType} from '../../../utils/types'
 import {useDrag} from 'react-dnd'
 import {useDispatch, useSelector} from 'react-redux'
+import {IIngredient} from '../../../types/types'
+import { RootState } from '../../../services/store'
 
-
-
-const IngredientsItem = ({ingredient}) => {
+interface Props {
+    ingredient: IIngredient
+}
+const IngredientsItem = ({ingredient}: Props) => {
     const dispatch =useDispatch()
-    const countValue = useSelector((state) => state.ingredientsConstructor.counters[ingredient._id])
+    // @ts-ignore
+    const countValue = useSelector((state: RootState) => state.ingredientsConstructor.counters[ingredient._id])
     //console.log(countValue)
 
     const [isModalOpened, setIsModalOpened] = useState(false)
@@ -48,8 +52,6 @@ const IngredientsItem = ({ingredient}) => {
         </>
     )
 }
-IngredientsItem.propTypes = {
-    ingredient: ingredientType.isRequired,
-};
+
 
 export default IngredientsItem

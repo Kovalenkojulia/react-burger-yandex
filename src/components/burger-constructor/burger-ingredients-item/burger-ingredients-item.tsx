@@ -2,18 +2,23 @@ import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger
 import PropTypes from 'prop-types'
 import {ingredientType} from '../../../utils/types'
 import {useDispatch} from 'react-redux'
-import {useRef} from 'react'
+import { FC, useRef } from 'react'
 import {removeFilling, sortIngredients} from '../../../services/slices/burgerConstructorSlice'
-import {useDrag, useDrop} from 'react-dnd'
+import { useDrag, useDrop, XYCoord } from 'react-dnd'
+import {IIngredientWithUUID} from '../../../types/types'
 
 import styles from './burger-ingredients-item.module.css'
 
-const BurgerIngredientsItem = ({filling, index}) => {
+interface IBurgerIngredientsItemProps {
+    filling: IIngredientWithUUID
+    index: number
+}
+const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = ({filling, index}) => {
     const dispatch = useDispatch()
-    const dropRef = useRef()
+    const dropRef = useRef<HTMLDivElement>(null)
     const [, drop] = useDrop({
         accept: 'constructorIngredient',
-        hover(item, monitor) {
+        hover(item:{index: number}, monitor) {
             if (!dropRef.current) {
                 return
             }
@@ -25,11 +30,12 @@ const BurgerIngredientsItem = ({filling, index}) => {
                 return
             }
 
+            // @ts-ignore
             const hoverBoundingRect = dropRef.current?.getBoundingClientRect()
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
             const clientOffset = monitor.getClientOffset()
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return
@@ -52,19 +58,17 @@ const BurgerIngredientsItem = ({filling, index}) => {
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-        previewOptions: {
-            showPreview: false, // отключить подложку
 
-        }
     })
 
     const opacity = isDragging ? 0.3 : 2
 
     drop(drag(dragPreview(dropRef)))
 
-    const handleDeleteFilling = (filling) => {
+    const handleDeleteFilling = (filling: IIngredientWithUUID) => {
         dispatch(removeFilling(filling))
     }
+
 
     return (
 
@@ -75,7 +79,7 @@ const BurgerIngredientsItem = ({filling, index}) => {
                 </div>
                 <div className={styles.ingredient}>
                     <ConstructorElement
-                        type={filling.type}
+                        //type={filling.type}
                         text={filling.name}
                         price={filling.price}
                         thumbnail={filling.image}
@@ -92,10 +96,7 @@ const BurgerIngredientsItem = ({filling, index}) => {
     )
 }
 
-BurgerIngredientsItem.propTypes = {
-    filling: ingredientType.isRequired,
-    index: PropTypes.number
-}
+
 
 
 export default BurgerIngredientsItem

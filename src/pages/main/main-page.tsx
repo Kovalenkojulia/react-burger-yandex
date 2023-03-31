@@ -5,9 +5,9 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients'
 
 import styles from '../../components/app/app.module.css'
-import React, {useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
-const MainPage = () => {
+const MainPage: FC = () => {
 
     return(
         <main className={styles.main}>

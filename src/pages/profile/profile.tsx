@@ -1,24 +1,31 @@
 import styles from './profile.module.css'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useEffect, useRef, useState} from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getCurrentUser, getUpdateUserError, logoutUser, updateUser} from '../../services/slices/userSlice'
 import { useForm} from '../../hooks/useForm'
 import clsx from 'clsx'
+import {IUserRegister} from '../../types/types'
 
+const initialState: IUserRegister = {
+    name: '',
+    email:'',
+    password:''
+}
 
-export function Profile() {
+export const Profile: FC =()=> {
 
-    const inputRef = useRef(null)
+    /**const inputRef = useRef(null)
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
         alert('Icon Click Callback')
-    }
+    }**/
 
     const dispatch = useDispatch()
     const user = useSelector(getCurrentUser)
-    const { values, handleChange, setStartingValues } = useForm()
+    // @ts-ignore
+    const { values, handleChange, setStartingValues } = useForm<IUserRegister>(initialState)
     let {name = '', email = '', password = ''} = values
     const isEditMode = user?.name !== name || user?.email !== email || password
     const error = useSelector(getUpdateUserError)
@@ -29,14 +36,14 @@ export function Profile() {
         }
     }, [user, setStartingValues])
 
-    const linkClassName = ({isActive})=>{
+    const linkClassName = ({isActive}: {isActive: boolean})=>{
         return clsx(
             "text text_type_main-medium",
             isActive ? "menu-link_active" : "menu-link_inactive"
         )
     }
     const handleLogout = () => {
-        dispatch(logoutUser())
+        dispatch<any>(logoutUser())
     }
 
     const handleReset = () => {
@@ -44,9 +51,10 @@ export function Profile() {
             setStartingValues(user)
         }
     }
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        dispatch(updateUser(values))
+        // @ts-ignore
+        dispatch<any>(updateUser(values))
     }
     return (
         <main className={styles.page}>
@@ -88,8 +96,6 @@ export function Profile() {
                     value={name}
                     name={'name'}
                     error={false}
-                    ref={inputRef}
-                    onIconClick={onIconClick}
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="ml-1"

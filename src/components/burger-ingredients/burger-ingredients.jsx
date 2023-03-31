@@ -5,13 +5,15 @@ import PropTypes from 'prop-types'
 import IngredientsItem from './item-constructor/ingredients-item'
 import {useSelector, useDispatch} from 'react-redux'
 import {fetchIngredients} from '../../services/slices/ingredientsSlice'
-import React, {useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer';
 import {Link, useLocation} from 'react-router-dom'
+import { RootState } from '../../services/store'
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch()
     const location = useLocation()
+    // @ts-ignore
     const {data, loading, error} = useSelector((state) => state.ingredients)
 
 
@@ -47,6 +49,9 @@ const BurgerIngredients = () => {
     if(error) {
         return <p>{error}</p>
     }
+
+
+
     return (
          <div>
 

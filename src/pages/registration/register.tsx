@@ -5,18 +5,24 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getRegisterError, registerUser} from '../../services/slices/userSlice'
 import {useForm} from '../../hooks/useForm'
+import {IUserRegister} from '../../types/types'
 
 export function Register(){
 
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { values, handleChange } = useForm();
+    const { values, handleChange } = useForm<IUserRegister>({
+        name:'',
+        email:'',
+        password:'',
+    });
     const { name = "", email = "", password = "" } = values;
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        dispatch(registerUser(values)).then(({ payload }) => {
+        // @ts-ignore
+        dispatch<any>(registerUser(values)).then(({ payload }) => {
             if (payload?.success) {
                 navigate("/", {
                     replace: true,

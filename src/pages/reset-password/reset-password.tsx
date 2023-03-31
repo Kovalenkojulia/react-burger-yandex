@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Link, useLocation, useNavigate,} from 'react-router-dom'
 import {resetPassword, getResetPasswordError} from '../../services/slices/userSlice'
 import {useForm} from '../../hooks/useForm'
+import {IPasswordResetPayload, IUserAuthSuccessResponse} from '../../types/types'
 
 
 export function ResetPassword () {
@@ -12,7 +13,10 @@ export function ResetPassword () {
     const navigate = useNavigate();
     const location = useLocation();
     const error = useSelector(getResetPasswordError);
-    const { values, handleChange } = useForm();
+    const { values, handleChange } = useForm<IPasswordResetPayload>({
+        password: '',
+        token: ''
+    });
     const { password = "", token = "" } = values;
 
     useEffect(() => {
@@ -21,9 +25,10 @@ export function ResetPassword () {
         }
     });
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        dispatch(resetPassword({ password, token })).then(({ payload }) => {
+        // @ts-ignore
+        dispatch<any>(resetPassword({ password, token })).then(({ payload }) => {
             if (payload?.success) {
                 navigate("/login", { replace: true });
             }

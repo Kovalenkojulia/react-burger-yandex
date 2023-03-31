@@ -1,10 +1,14 @@
 import {useSelector} from 'react-redux'
 import {Navigate, useLocation} from 'react-router-dom'
 import {getAuthChecked, getCurrentUser, isUserLoading} from '../../services/slices/userSlice'
+import { FC, ReactElement } from 'react'
 
+interface IProtectedRouteProps {
+    onlyUnAuth?: boolean
+    element: ReactElement
+}
 
-
-const ProtectedRoute =({onlyUnAuth=false, element})=>{
+const ProtectedRoute: FC<IProtectedRouteProps> =({onlyUnAuth, element})=>{
     const user = useSelector(getCurrentUser)
     const isLoading = useSelector(isUserLoading)
     const authChecked = useSelector(getAuthChecked)

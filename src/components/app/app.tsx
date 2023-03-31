@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, Dispatch } from 'react'
 
 import AppHeader from '../app-header/app-header'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
@@ -27,7 +27,7 @@ import {Profile} from '../../pages/profile/profile'
 
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch: Dispatch<any> = useDispatch()
     const navigate = useNavigate()
 
     const location = useLocation()
@@ -73,7 +73,7 @@ function App() {
                         path="/ingredients/:id"
                         element={
                             <Modal onClose={handleClose} title="Детали ингредиента">
-                                <IngredientDetails />
+                                <IngredientDetails outsideModal />
                             </Modal>
                         }
                     />

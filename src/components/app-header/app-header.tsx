@@ -3,7 +3,7 @@ import styles from './app-header.module.css'
 import {Link, NavLink} from 'react-router-dom'
 import clsx from 'clsx'
 const AppHeader = () => {
-    const linkClassName = ({isActive}) => {
+    const linkClassName = ({isActive}: {isActive: boolean}) => {
         return clsx(styles.menuLink,{
             [styles.menuLink_inactive]: !isActive
         })

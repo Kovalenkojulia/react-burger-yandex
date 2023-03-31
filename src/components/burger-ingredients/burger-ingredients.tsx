@@ -9,16 +9,25 @@ import React, { FC, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer';
 import {Link, useLocation} from 'react-router-dom'
 import { RootState } from '../../services/store'
+import {IIngredient} from '../../types/types'
 
-const BurgerIngredients = () => {
+
+interface IRootState {
+    ingredients: {
+        data: IIngredient[]
+        loading: boolean
+        error: string | null
+    }
+}
+const BurgerIngredients: FC = () => {
     const dispatch = useDispatch()
     const location = useLocation()
-    // @ts-ignore
-    const {data, loading, error} = useSelector((state) => state.ingredients)
+
+    const {data, loading, error} = useSelector((state: IRootState) => state.ingredients)
 
 
     useEffect(() => {
-        dispatch(fetchIngredients());
+        dispatch<any>(fetchIngredients());
 
     }, [dispatch]);
 
@@ -36,7 +45,7 @@ const BurgerIngredients = () => {
     });
 
 
-    const onTabClick = (tab) => {
+    const onTabClick = (tab: string) => {
         setCurrentTab(tab);
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -65,11 +74,11 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'bun'} id={'bun'} >
-                            {data.filter(el => el.type === 'bun').map((el) =>
+                            {data.filter(el => el.type === 'bun').map((el: IIngredient) =>
                                      (
                                          <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
 
-                                        <IngredientsItem key={el._id} ingredient={el} titile={'Булки'} type='bun'
+                                        <IngredientsItem key={el._id} ingredient={el} title={'Булки'} type='bun'
                                          />
                                          </Link>
 
@@ -86,7 +95,7 @@ const BurgerIngredients = () => {
                             Соусы
                         </p>
                         <div className={styles.item} key={'sauce'} id={'sauce'} >
-                            {data.filter(el => el.type === 'sauce').map((el) =>
+                            {data.filter(el => el.type === 'sauce').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el} title={'Соусы'}
@@ -104,7 +113,7 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'main'} id={'main'} >
-                            {data.filter(el => el.type === 'main').map((el) =>
+                            {data.filter(el => el.type === 'main').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el}

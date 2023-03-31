@@ -12,8 +12,10 @@ import { RootState } from '../../../services/store'
 
 interface Props {
     ingredient: IIngredient
+    type: string
+    title?: string
 }
-const IngredientsItem = ({ingredient}: Props) => {
+const IngredientsItem = ({ingredient, title, type}: Props) => {
     const dispatch =useDispatch()
     // @ts-ignore
     const countValue = useSelector((state: RootState) => state.ingredientsConstructor.counters[ingredient._id])

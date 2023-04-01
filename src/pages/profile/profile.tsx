@@ -24,17 +24,16 @@ export const Profile: FC =()=> {
 
     const dispatch = useDispatch()
     const user = useSelector(getCurrentUser)
-    // @ts-ignore
-    const { values, handleChange, setStartingValues } = useForm<IUserRegister>(initialState)
+    const { values, handleChange, setValues } = useForm<IUserRegister>(initialState)
     let {name = '', email = '', password = ''} = values
     const isEditMode = user?.name !== name || user?.email !== email || password
     const error = useSelector(getUpdateUserError)
 
     useEffect(()=>{
         if(user){
-            setStartingValues(user);
+            setValues(user);
         }
-    }, [user, setStartingValues])
+    }, [user, setValues])
 
     const linkClassName = ({isActive}: {isActive: boolean})=>{
         return clsx(
@@ -48,7 +47,7 @@ export const Profile: FC =()=> {
 
     const handleReset = () => {
         if (user) {
-            setStartingValues(user)
+            setValues(user)
         }
     }
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

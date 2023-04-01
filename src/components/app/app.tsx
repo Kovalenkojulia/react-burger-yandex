@@ -51,7 +51,7 @@ function App() {
 
     return (
         <>
-        <Routes >
+        <Routes location={state?.backgroundLocation || location} >
 
             <Route path={'/'} element={<Layout/>}>
             <Route path={'/'} element={<MainPage/>}/>
@@ -73,7 +73,7 @@ function App() {
                         path="/ingredients/:id"
                         element={
                             <Modal onClose={handleClose} title="Детали ингредиента">
-                                <IngredientDetails outsideModal />
+                                <IngredientDetails/>
                             </Modal>
                         }
                     />

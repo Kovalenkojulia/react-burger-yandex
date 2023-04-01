@@ -3,8 +3,6 @@ import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-com
 import IngredientDetails from '../../ingredient-details/ingredient-details'
 import Modal from '../../modal/modal'
 import React, {useState} from 'react'
-import PropTypes from 'prop-types'
-import {ingredientType} from '../../../utils/types'
 import {useDrag} from 'react-dnd'
 import {useDispatch, useSelector} from 'react-redux'
 import {IIngredient} from '../../../types/types'

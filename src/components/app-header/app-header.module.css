@@ -3,8 +3,11 @@
     justify-content: space-between;
     margin-top: 32px;
     margin-bottom: 32px;
-    margin-left: 50px;
+    margin-left: 120px;
+    margin-right: 120px;
     align-items: center;
+    min-width: 1260px;
+
 
 }
 .item {

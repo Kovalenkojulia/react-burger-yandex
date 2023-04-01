@@ -1,7 +1,6 @@
 import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-tab'
 import styles from './burger-constructor.module.css'
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import IngredientsItem from './item-constructor/ingredients-item'
 import {useSelector, useDispatch} from 'react-redux'
 import {fetchIngredients} from '../../services/slices/ingredientsSlice'

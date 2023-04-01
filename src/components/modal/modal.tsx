@@ -39,7 +39,10 @@ const Modal: FC<IModalProps> = ({children, title, onClose}) => {
                             <p className="text text_type_main-medium">
                                 {title || ''}
                             </p>
-                            <CloseIcon type="primary" onClick={onClose}/>
+                            <button className={styles.button} onClick={onClose}>
+                                <CloseIcon type="primary" />
+                            </button>
+
                         </div>
                         {children}
                     </div>

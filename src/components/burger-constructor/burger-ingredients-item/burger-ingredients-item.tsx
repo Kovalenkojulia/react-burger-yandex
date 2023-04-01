@@ -1,6 +1,4 @@
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
-import {ingredientType} from '../../../utils/types'
 import {useDispatch} from 'react-redux'
 import { FC, useRef } from 'react'
 import {removeFilling, sortIngredients} from '../../../services/slices/burgerConstructorSlice'

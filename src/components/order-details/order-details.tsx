@@ -3,9 +3,9 @@ import styles from './order-details.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
 import { FC, useEffect } from 'react'
-import {ingredientType} from '../../utils/types'
+
 import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
-import PropTypes from 'prop-types'
+
 
 interface IOrderDetails {
     orderId: number

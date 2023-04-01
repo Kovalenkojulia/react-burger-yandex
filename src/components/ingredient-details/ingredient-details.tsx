@@ -1,5 +1,4 @@
 import styles from './ingredient-details.module.css'
-import {ingredientType} from '../../utils/types'
 
 import {useDispatch, useSelector} from 'react-redux'
 import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredient'
@@ -41,19 +40,20 @@ const IngredientDetails: FC<IIngredientDetailProps> = ({ outsideModal}) => {
 
 
     return (
-        <div >
-            <div className={clsx( styles.card, {
-                [styles.containerOutsideModal]: outsideModal,
-            })}>
-                {outsideModal && (
-                    <h1 className="text text_type_main-large">Детали ингредиента</h1>
-                )}
+        <div className={clsx(styles.card, {
+            [styles.containerOutsideModal]: outsideModal,
+        })}>
+            {outsideModal && (
+                <h1 className="text text_type_main-large">Детали ингредиента</h1>
+            )}
+
+
                 <img src={ingredient?.image_large} alt={'alt'} className={styles.image}/>
                 <p className="text text_type_main-small">
                     {ingredient?.name}
                 </p>
 
-            </div>
+
 
             <div className={styles.details}>
                 <div className={styles.item}>

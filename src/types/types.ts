@@ -9,31 +9,34 @@ export interface IIngredient {
     image: string
 }
 
-export interface ICreateOrderPayload {
-    ingredients: string[];
+export interface IIngredientWithUUID extends IIngredient {
+    uuid: string;
 }
+
+export interface IUserEmail {
+    email: string;
+}
+
+export interface IUser {
+    email: string;
+    name: string;
+}
+
+export interface IUserRegister extends IUser {
+    password: string;
+}
+
 export interface ILoginFormValues {
     email: string;
     password: string;
 }
 
-export interface IUserEmail {
-    email: string
-}
-export interface IUser {
-    email: string
-    name: string
-}
-
-export interface IUserRegister {
-    email: string
-    name: string
-    password: string
-}
-
-export interface IPasswordResetPayload {
-    password: string;
-    token: string;
+export interface IOrder {
+    success: boolean;
+    name: string;
+    order: {
+        number: number;
+    };
 }
 
 export interface IUserAuthStatusResponse {
@@ -41,7 +44,7 @@ export interface IUserAuthStatusResponse {
     message: string;
 }
 
-export interface IUserAuthSuccessResponse {
+interface IUserAuthSuccessResponse {
     success: boolean;
 }
 
@@ -51,7 +54,38 @@ export interface IUserAuthSuccessTokenResponse
     refreshToken: string;
 }
 
-export interface IIngredientWithUUID extends IIngredient {
-    uuid: string;
+export interface IUserAuthSuccessUserResponse
+    extends IUserAuthSuccessTokenResponse {
+    user: IUser;
 }
 
+export interface IUserAuthSuccessCurrentUserResponse
+    extends IUserAuthSuccessResponse {
+    user: IUser;
+}
+
+export interface IFetchWithRefreshOptions {
+    headers: {
+        [name: string]: string;
+    };
+    method: string;
+    body?: string;
+}
+
+export interface ICategoriesNames {
+    [name: string]: string;
+}
+
+export interface IFillingDragIndexes {
+    dragIndex: number;
+    hoverIndex: number;
+}
+
+export interface IPasswordResetPayload {
+    password: string;
+    token: string;
+}
+
+export interface ICreateOrderPayload {
+    ingredients: string[];
+}

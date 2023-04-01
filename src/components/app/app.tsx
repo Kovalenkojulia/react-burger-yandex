@@ -23,6 +23,7 @@ import Modal from '../modal/modal'
 import {ForgotPassword} from '../../pages/forgot-password/forgot-password'
 import {ResetPassword} from '../../pages/reset-password/reset-password'
 import {Profile} from '../../pages/profile/profile'
+import { fetchIngredients } from '../../services/slices/ingredientsSlice'
 
 
 
@@ -34,6 +35,10 @@ function App() {
     const state = location.state
 
     const user = useSelector(getCurrentUser)
+
+    useEffect(()=> {
+        dispatch(fetchIngredients())
+    }, [])
 
     useEffect(()=> {
         if(!user) {

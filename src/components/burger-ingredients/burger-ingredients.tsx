@@ -19,18 +19,8 @@ interface IRootState {
     }
 }
 const BurgerIngredients: FC = () => {
-    const dispatch = useDispatch()
     const location = useLocation()
-
     const {data, loading, error} = useSelector((state: IRootState) => state.ingredients)
-
-
-    useEffect(() => {
-        dispatch<any>(fetchIngredients());
-
-    }, [dispatch]);
-
-    //console.log(data.find((ingredient)=> ingredient.type === 'bun'))
     const [currentTab, setCurrentTab] = React.useState("bun");
     const [bunRef] = useInView({
         threshold: 0.5, onChange: (inView) => inView && setCurrentTab('bun')

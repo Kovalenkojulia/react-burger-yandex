@@ -12,12 +12,12 @@
     align-items: center;
 }
 .card {
-    max-height: 538px;
-    max-width: 720px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    width: 520px;
+    margin: auto;
     align-items: center;
+    justify-content: center;
 }
 .image {
     width: 420px;

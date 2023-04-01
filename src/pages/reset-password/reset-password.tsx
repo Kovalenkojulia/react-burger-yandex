@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Link, useLocation, useNavigate,} from 'react-router-dom'
 import {resetPassword, getResetPasswordError} from '../../services/slices/userSlice'
 import {useForm} from '../../hooks/useForm'
-import {IPasswordResetPayload, IUserAuthSuccessResponse} from '../../types/types'
+import {IPasswordResetPayload, IUserAuthSuccessUserResponse} from '../../types/types'
 
 
 export function ResetPassword () {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { FC, MouseEventHandler } from 'react'
 
 interface IModalOverLay {
-    onClick: MouseEventHandler<HTMLDivElement>
+    onClick: () => void
 }
 const ModalOverlay: FC<IModalOverLay> = ({onClick}) => {
     return(

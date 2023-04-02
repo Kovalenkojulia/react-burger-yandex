@@ -22,9 +22,6 @@ const IngredientDetails: FC<IIngredientDetailProps> = ({ outsideModal}) => {
     const {id} = useParams()
 
     useEffect(() => {
-        if(!ingredients.length){
-            dispatch<any>(fetchIngredients())
-        }
         if(ingredients.length && !ingredient){
             console.log('id:', id);
             dispatch(

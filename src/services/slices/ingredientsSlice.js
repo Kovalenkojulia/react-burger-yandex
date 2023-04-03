@@ -1,19 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {API_ENDPOINT} from '../../utils/constants'
+import CheckResponse from '../../utils/check-response'
 
 export const fetchIngredients = createAsyncThunk(
     "ingredients/fetchIngredients",
     async (_, {rejectWithValue}) => {
         const response = await fetch(
-            "https://norma.nomoreparties.space/api/ingredients", {
+            API_ENDPOINT + 'ingredients', {
                 method: 'GET'
             }
         )
-        if (response.ok){
-            const data = await response.json();
-            return data;
-        } else {
-            return rejectWithValue(`${response.statusText}`)
-        }
+        const data = await CheckResponse(response)
+        return data
 
     }
 );

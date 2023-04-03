@@ -2,12 +2,15 @@ import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './order-details.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
-import {useEffect} from 'react'
-import {ingredientType} from '../../utils/types'
-import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
-import PropTypes from 'prop-types'
+import { FC, useEffect } from 'react'
 
-const OrderDetails = ({orderId}) => {
+import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
+
+
+interface IOrderDetails {
+    orderId: number
+}
+const OrderDetails: FC<IOrderDetails> = ({orderId}) => {
 
     return (
         <div className={styles.order}>
@@ -28,7 +31,5 @@ const OrderDetails = ({orderId}) => {
 
     )
 }
-OrderDetails.propTypes = {
-    orderId: PropTypes.number.isRequired,
-};
+
 export default OrderDetails;

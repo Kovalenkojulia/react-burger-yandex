@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, Dispatch } from 'react'
 
 import AppHeader from '../app-header/app-header'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
@@ -23,17 +23,22 @@ import Modal from '../modal/modal'
 import {ForgotPassword} from '../../pages/forgot-password/forgot-password'
 import {ResetPassword} from '../../pages/reset-password/reset-password'
 import {Profile} from '../../pages/profile/profile'
+import { fetchIngredients } from '../../services/slices/ingredientsSlice'
 
 
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch: Dispatch<any> = useDispatch()
     const navigate = useNavigate()
 
     const location = useLocation()
     const state = location.state
 
     const user = useSelector(getCurrentUser)
+
+    useEffect(()=> {
+        dispatch(fetchIngredients())
+    }, [])
 
     useEffect(()=> {
         if(!user) {
@@ -51,7 +56,7 @@ function App() {
 
     return (
         <>
-        <Routes >
+        <Routes location={state?.backgroundLocation || location} >
 
             <Route path={'/'} element={<Layout/>}>
             <Route path={'/'} element={<MainPage/>}/>
@@ -73,7 +78,7 @@ function App() {
                         path="/ingredients/:id"
                         element={
                             <Modal onClose={handleClose} title="Детали ингредиента">
-                                <IngredientDetails />
+                                <IngredientDetails/>
                             </Modal>
                         }
                     />

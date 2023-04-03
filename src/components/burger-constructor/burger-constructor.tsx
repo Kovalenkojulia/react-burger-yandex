@@ -1,10 +1,11 @@
 import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
 import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import {useContext, useEffect, useMemo, useRef, useState} from 'react'
+import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import {useDispatch, useSelector} from 'react-redux'
+
 import {
     addIngredient,
     getConstructorBun,
@@ -18,6 +19,7 @@ import {createOrder, getOrder} from '../../services/slices/orderSlice'
 import {resetOrder} from '../../services/slices/orderSlice'
 import {getCurrentUser} from '../../services/slices/userSlice'
 import {useNavigate} from 'react-router-dom'
+import {IIngredient, IIngredientWithUUID} from '../../types/types'
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
@@ -32,15 +34,16 @@ const BurgerConstructor = () => {
     const [isModalVisible, setIsModalVisible] = useState(false)
 
 
-
     const [, dropTargetRef] = useDrop({
         accept: 'ingredient',
-        drop(ingredient) {
+        drop(ingredient: IIngredient) {
             handleOnDrop(ingredient)
         },
     })
 
-    const handleOnDrop = (ingredient) => {
+
+
+    const handleOnDrop = (ingredient: IIngredient) => {
         dispatch(
             addIngredient({
                 ...ingredient,
@@ -50,16 +53,15 @@ const BurgerConstructor = () => {
     }
 
     const handleOrderClick = () => {
-
-
         if (!user) {
             navigate('/login')
         } else {
             setIsModalVisible(true)
-            dispatch(createOrder({
+            // @ts-ignore
+            dispatch<any>(createOrder({
                 ingredients: [
                     bun._id,
-                    ...fillings.map((filling) => filling._id),
+                    ...fillings.map((filling: IIngredient) => filling._id),
                     bun._id,
                 ],
             }))
@@ -73,6 +75,7 @@ const BurgerConstructor = () => {
         dispatch(resetOrder())
     }
 
+    // @ts-ignore
     return (
         <>
             <div ref={dropTargetRef} className={styles.elements}>
@@ -93,7 +96,8 @@ const BurgerConstructor = () => {
                 </div>
                 <div className={styles.scroller}>
                     {
-                        fillings.map((filling, index) => (
+                        fillings.map((filling: IIngredientWithUUID, index: number
+                        ) => (
                             <div key={filling.uuid}>
                                 <BurgerIngredientsItem filling={filling} index={index}/>
                             </div>

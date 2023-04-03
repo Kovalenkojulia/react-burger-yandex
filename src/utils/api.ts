@@ -1,22 +1,55 @@
-
+// @ts-ignore
 import jsCookie from "js-cookie";
+import {
+    IIngredient, IOrder, IUserRegister, ILoginFormValues, IUserAuthStatusResponse, IUserAuthSuccessUserResponse, IUserAuthSuccessTokenResponse,
+    IUserAuthSuccessCurrentUserResponse, IFetchWithRefreshOptions, ICreateOrderPayload
+} from '../types/types'
 
 const API_ENDPOINT = 'https://norma.nomoreparties.space/api/';
-class Api {
 
-    constructor(endpoint) {
+interface IApi {
+    readonly endpoint: string;
+    fetchIngredients: () => Promise<IIngredient[]>;
+    createOrder: (ingredients: ICreateOrderPayload) => Promise<IOrder>;
+    resetPassword: (email: string) => Promise<IUserAuthStatusResponse>;
+    resetPasswordWithToken: (
+        password: string,
+        token: string
+    ) => Promise<IUserAuthStatusResponse>;
+    registerUser: (
+        userData: IUserRegister
+    ) => Promise<IUserAuthSuccessUserResponse | IUserAuthStatusResponse>;
+    loginUser: (
+        userData: ILoginFormValues
+    ) => Promise<IUserAuthSuccessUserResponse | IUserAuthStatusResponse>;
+    refreshToken: () => Promise<
+        IUserAuthSuccessTokenResponse | IUserAuthStatusResponse
+    >;
+    logoutUser: () => Promise<IUserAuthStatusResponse>;
+    getUser: () => Promise<
+        IUserAuthSuccessCurrentUserResponse | IUserAuthStatusResponse
+    >;
+    updateUser: (
+        userData: IUserRegister
+    ) => Promise<IUserAuthSuccessCurrentUserResponse | IUserAuthStatusResponse>;
+    setCookiesFromResponse: (res: IUserAuthSuccessUserResponse) => void;
+}
+class Api implements IApi{
+    public readonly endpoint: string
+
+    constructor(endpoint: string) {
         this.endpoint = endpoint;
         this.getUser = this.getUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
     }
 
-    fetchIngredients() {
+    fetchIngredients(): Promise<IIngredient[]> {
         return fetch(this.endpoint + "ingredients")
             .then((res) => this._handleApiResponse(res))
             .then((data) => data.data);
     }
 
-    createOrder(ingredients) {
+    createOrder(ingredients: ICreateOrderPayload): Promise<IOrder> {
         return fetch(this.endpoint + "orders", {
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +59,7 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    resetPassword(email) {
+    resetPassword(email: string): Promise<IUserAuthStatusResponse> {
         return fetch(this.endpoint + "password-reset", {
             headers: {
                 "Content-Type": "application/json",
@@ -38,7 +71,7 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    resetPasswordWithToken(password, token) {
+    resetPasswordWithToken(password: string, token: string): Promise<IUserAuthStatusResponse> {
         return fetch(this.endpoint + "password-reset/reset", {
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +84,8 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    registerUser({ email, password, name }) {
+    registerUser({ email, password, name }: IUserRegister): Promise<IUserAuthSuccessUserResponse |
+     IUserAuthStatusResponse> {
         return fetch(this.endpoint + "auth/register", {
             headers: {
                 "Content-Type": "application/json",
@@ -65,7 +99,7 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    loginUser({ email, password }) {
+    loginUser({ email, password }: ILoginFormValues): Promise<IUserAuthSuccessUserResponse | IUserAuthStatusResponse> {
         return fetch(this.endpoint + "auth/login", {
             headers: {
                 "Content-Type": "application/json",
@@ -78,7 +112,7 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    refreshToken() {
+    refreshToken(): Promise<IUserAuthSuccessTokenResponse | IUserAuthStatusResponse> {
         return fetch(this.endpoint + "auth/token", {
             headers: {
                 "Content-Type": "application/json",
@@ -90,7 +124,7 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    logoutUser() {
+    logoutUser(): Promise<IUserAuthStatusResponse> {
         return fetch(this.endpoint + "auth/logout", {
             headers: {
                 "Content-Type": "application/json",
@@ -102,8 +136,8 @@ class Api {
         }).then((res) => this._handleApiResponse(res));
     }
 
-    getUser() {
-        return this._fetchWithRefresh(this.endpoint + "auth/user", {
+    getUser(): Promise<IUserAuthSuccessCurrentUserResponse | IUserAuthStatusResponse> {
+        return this.fetchWithRefresh(this.endpoint + "auth/user", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ` + jsCookie.get("accessToken"),
@@ -112,8 +146,8 @@ class Api {
         });
     }
 
-    updateUser({ name, email, password }) {
-        return this._fetchWithRefresh(this.endpoint + "auth/user", {
+    updateUser({ name, email, password }: IUserRegister): Promise<IUserAuthSuccessCurrentUserResponse | IUserAuthStatusResponse> {
+        return this.fetchWithRefresh(this.endpoint + "auth/user", {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ` + jsCookie.get("accessToken"),
@@ -127,24 +161,29 @@ class Api {
         });
     }
 
-    _handleApiResponse(res) {
+    _handleApiResponse(res: Response) {
         return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
     }
 
-    _fetchWithRefresh = async (url, options) => {
+    private fetchWithRefresh = async (
+        url: string,
+        options: IFetchWithRefreshOptions
+    ) => {
         try {
             const res = await fetch(url, options);
             return await this._handleApiResponse(res);
-        } catch (err) {
-            if (err.message === "jwt expired" || err.message === "jwt malformed") {
+        } catch (err: IUserAuthStatusResponse | any) {
+            if (err?.message === "jwt expired" || err?.message === "jwt malformed") {
                 const refreshData = await this.refreshToken();
 
                 if (!refreshData.success) {
                     return Promise.reject(refreshData);
                 }
 
-                this.setCookiesFromResponse(refreshData);
-                options.headers.Authorization = refreshData?.accessToken;
+                const successRefreshData = refreshData as IUserAuthSuccessTokenResponse;
+
+                this.setCookiesFromResponse(successRefreshData);
+                options.headers.Authorization = successRefreshData.accessToken;
 
                 const res = await fetch(url, options);
                 return await this._handleApiResponse(res);
@@ -154,7 +193,9 @@ class Api {
         }
     };
 
-    setCookiesFromResponse = (res) => {
+    setCookiesFromResponse = (
+        res: IUserAuthSuccessUserResponse | IUserAuthSuccessTokenResponse
+    ) => {
         const { accessToken, refreshToken } = res;
 
         if (accessToken) {
@@ -166,6 +207,7 @@ class Api {
         }
     };
 }
+
 
 const api = new Api(API_ENDPOINT);
 

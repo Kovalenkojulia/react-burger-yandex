@@ -1,11 +1,12 @@
 import {createSlice, createAsyncThunk, isRejectedWithValue} from '@reduxjs/toolkit'
+import {API_ENDPOINT} from '../../utils/constants'
 
 
 export const createOrder = createAsyncThunk(
     'order/createOrder',
     async (ingredients, { rejectWithValue }) => {
         try {
-            const response = await fetch('https://norma.nomoreparties.space/api/orders', {
+            const response = await fetch(API_ENDPOINT + 'orders', {
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -1,26 +1,26 @@
 import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-tab'
 import styles from './burger-constructor.module.css'
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import IngredientsItem from './item-constructor/ingredients-item'
 import {useSelector, useDispatch} from 'react-redux'
 import {fetchIngredients} from '../../services/slices/ingredientsSlice'
-import React, {useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer';
 import {Link, useLocation} from 'react-router-dom'
+import { RootState } from '../../services/store'
+import {IIngredient} from '../../types/types'
 
-const BurgerIngredients = () => {
-    const dispatch = useDispatch()
+
+interface IRootState {
+    ingredients: {
+        data: IIngredient[]
+        loading: boolean
+        error: string | null
+    }
+}
+const BurgerIngredients: FC = () => {
     const location = useLocation()
-    const {data, loading, error} = useSelector((state) => state.ingredients)
-
-
-    useEffect(() => {
-        dispatch(fetchIngredients());
-
-    }, [dispatch]);
-
-    //console.log(data.find((ingredient)=> ingredient.type === 'bun'))
+    const {data, loading, error} = useSelector((state: IRootState) => state.ingredients)
     const [currentTab, setCurrentTab] = React.useState("bun");
     const [bunRef] = useInView({
         threshold: 0.5, onChange: (inView) => inView && setCurrentTab('bun')
@@ -34,7 +34,7 @@ const BurgerIngredients = () => {
     });
 
 
-    const onTabClick = (tab) => {
+    const onTabClick = (tab: string) => {
         setCurrentTab(tab);
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -47,6 +47,9 @@ const BurgerIngredients = () => {
     if(error) {
         return <p>{error}</p>
     }
+
+
+
     return (
          <div>
 
@@ -60,11 +63,11 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'bun'} id={'bun'} >
-                            {data.filter(el => el.type === 'bun').map((el) =>
+                            {data.filter(el => el.type === 'bun').map((el: IIngredient) =>
                                      (
                                          <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
 
-                                        <IngredientsItem key={el._id} ingredient={el} titile={'Булки'} type='bun'
+                                        <IngredientsItem key={el._id} ingredient={el} title={'Булки'} type='bun'
                                          />
                                          </Link>
 
@@ -81,7 +84,7 @@ const BurgerIngredients = () => {
                             Соусы
                         </p>
                         <div className={styles.item} key={'sauce'} id={'sauce'} >
-                            {data.filter(el => el.type === 'sauce').map((el) =>
+                            {data.filter(el => el.type === 'sauce').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el} title={'Соусы'}
@@ -99,7 +102,7 @@ const BurgerIngredients = () => {
                         </p>
 
                         <div className={styles.item} key={'main'} id={'main'} >
-                            {data.filter(el => el.type === 'main').map((el) =>
+                            {data.filter(el => el.type === 'main').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links}>
                                     <IngredientsItem key={el._id} ingredient={el}

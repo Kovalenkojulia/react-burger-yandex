@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
+import {API_ENDPOINT} from '../../utils/constants'
+import checkResponse from '../../utils/check-response'
 
 export const forgotPassword = createAsyncThunk(
     "auth/resetPassword",
     async (email) => {
         const response = await fetch(
-            "https://norma.nomoreparties.space/api/password-reset",
+            API_ENDPOINT + 'password-reset',
             {
                 method: "POST",
                 headers: {
@@ -13,11 +15,7 @@ export const forgotPassword = createAsyncThunk(
                 },
                 body: JSON.stringify({ email: '' }),
             }
-        );
-
-        if (!response.ok) {
-            throw new Error("Ошибка при отправке запроса");
-        }
+        ).then(checkResponse)
 
         const data = await response.json();
         return data;

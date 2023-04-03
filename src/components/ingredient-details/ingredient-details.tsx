@@ -1,17 +1,20 @@
 import styles from './ingredient-details.module.css'
-import {ingredientType} from '../../utils/types'
 
 import {useDispatch, useSelector} from 'react-redux'
 import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredient'
 import {useParams} from 'react-router-dom'
 import {fetchIngredients, getIngredients} from '../../services/slices/ingredientsSlice'
-import {useEffect} from 'react'
+import {useEffect, FC} from 'react'
 import clsx from 'clsx'
 
-const IngredientDetails = ({ outsideModal}) => {
+interface IIngredientDetailProps {
+    outsideModal?: boolean
+}
+
+const IngredientDetails: FC<IIngredientDetailProps> = ({ outsideModal}) => {
     const dispatch = useDispatch()
     //const ingredients = useSelector(getIngredients)
-    const ingredients = useSelector((state) => state.ingredients.data)
+    const ingredients = useSelector((state: any) => state.ingredients.data)
     const ingredient = useSelector(getActiveIngredient)
     console.log(ingredients)
 
@@ -19,14 +22,11 @@ const IngredientDetails = ({ outsideModal}) => {
     const {id} = useParams()
 
     useEffect(() => {
-        if(!ingredients.length){
-            dispatch(fetchIngredients())
-        }
         if(ingredients.length && !ingredient){
             console.log('id:', id);
             dispatch(
                 setActiveIngredient(
-                    ingredients.find((ingredient)=>{
+                    ingredients.find((ingredient: any)=>{
                         return ingredient._id === id
                     })
                 )
@@ -37,19 +37,20 @@ const IngredientDetails = ({ outsideModal}) => {
 
 
     return (
-        <div >
-            <div className={clsx( styles.card, {
-                [styles.containerOutsideModal]: outsideModal,
-            })}>
-                {outsideModal && (
-                    <h1 className="text text_type_main-large">Детали ингредиента</h1>
-                )}
+        <div className={clsx(styles.card, {
+            [styles.containerOutsideModal]: outsideModal,
+        })}>
+            {outsideModal && (
+                <h1 className="text text_type_main-large">Детали ингредиента</h1>
+            )}
+
+
                 <img src={ingredient?.image_large} alt={'alt'} className={styles.image}/>
                 <p className="text text_type_main-small">
                     {ingredient?.name}
                 </p>
 
-            </div>
+
 
             <div className={styles.details}>
                 <div className={styles.item}>
@@ -83,7 +84,5 @@ const IngredientDetails = ({ outsideModal}) => {
 
 }
 
-IngredientDetails.propTypes = {
-    data: ingredientType,
-}
+
 export default IngredientDetails

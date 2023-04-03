@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './burger-constructor-tab.module.css'
-const BurgerConstructorTab = ({currentTab, onTabClick}) => {
+
+interface IBurgerConstructorTabProps {
+    currentTab: string
+    onTabClick: (tab: string) => void
+}
+const BurgerConstructorTab: FC<IBurgerConstructorTabProps> = ({currentTab, onTabClick}) => {
 
 
     return (

@@ -1,6 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
 import {API_ENDPOINT} from '../../utils/constants'
 import CheckResponse from '../../utils/check-response'
+import {IIngredient} from '../../types/types'
+import api from '../../utils/api'
+import { RootState } from '../store'
 
 export const fetchIngredients = createAsyncThunk(
     "ingredients/fetchIngredients",
@@ -16,10 +19,17 @@ export const fetchIngredients = createAsyncThunk(
     }
 );
 
-const initialState = {
+interface IIngredientsState {
+    data: IIngredient[];
+    hasError: SerializedError | null;
+    isLoading: boolean;
+}
+
+
+const initialState: IIngredientsState = {
     data: [],
     isLoading: false,
-    hasError: false,
+    hasError: null,
 }
 const ingredientsSlice = createSlice({
     name: "ingredients",
@@ -30,17 +40,17 @@ const ingredientsSlice = createSlice({
         builder
             .addCase(fetchIngredients.pending, (state) => {
                 state.isLoading = true;
-                state.hasError = false;
+                state.hasError = initialState.hasError;
             })
             .addCase(fetchIngredients.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.hasError = false;
+                state.hasError = initialState.hasError;
                 state.data = action.payload.data;
             })
             .addCase(fetchIngredients.rejected, (state) => {
                 state.data = initialState.data
                 state.isLoading = false;
-                state.hasError = true;
+                state.hasError = initialState.hasError;
             });
     },
 });
@@ -48,4 +58,4 @@ const ingredientsSlice = createSlice({
 
 export default ingredientsSlice.reducer;
 
-export const getIngredients = (state) => state.ingredients;
+export const getIngredients = (state: RootState) => state.ingredients.data;

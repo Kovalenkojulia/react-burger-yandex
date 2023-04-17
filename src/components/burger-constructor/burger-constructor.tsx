@@ -16,12 +16,11 @@ import {
 import {useDrop} from 'react-dnd'
 import {nanoid} from '@reduxjs/toolkit'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
-import {resetOrder} from '../../services/slices/orderSlice'
 import {getCurrentUser} from '../../services/slices/userSlice'
 import {useNavigate} from 'react-router-dom'
 import {IIngredient, IIngredientWithUUID} from '../../types/types'
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
     const dispatch = useDispatch()
     const user = useSelector(getCurrentUser)
     const navigate = useNavigate()
@@ -29,7 +28,7 @@ const BurgerConstructor = () => {
     const bun = useSelector(getConstructorBun)
     const fillings = useSelector(getConstructorFillings)
     const order = useSelector(getOrder)
-    const orderId = order?.order?.number
+    //const orderId = order?.order?.number
     const modalRef = useRef()
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -55,7 +54,7 @@ const BurgerConstructor = () => {
     const handleOrderClick = () => {
         if (!user) {
             navigate('/login')
-        } else {
+        } else if (bun) {
             setIsModalVisible(true)
             // @ts-ignore
             dispatch<any>(createOrder({
@@ -70,12 +69,14 @@ const BurgerConstructor = () => {
 
 
     const handleClose = () => {
-        if (!order) return;
+        //if (!order) return;
         dispatch(resetConstructor());
-        dispatch(resetOrder())
+        //dispatch(resetOrder())
+        setIsModalVisible(false)
     }
 
-    // @ts-ignore
+
+
     return (
         <>
             <div ref={dropTargetRef} className={styles.elements}>
@@ -130,9 +131,12 @@ const BurgerConstructor = () => {
                     </div>
                 </div>
             </div>
-            {orderId && (
+            {isModalVisible && (
                 <Modal onClose={handleClose}>
-                    <OrderDetails orderId={orderId}/>
+                    {order && (
+                        <OrderDetails orderId={order?.order?.number}/>
+                    )}
+
                 </Modal>
             )}
         </>

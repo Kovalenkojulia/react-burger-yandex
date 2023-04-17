@@ -77,7 +77,6 @@ const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = ({filling, index}
                 </div>
                 <div className={styles.ingredient}>
                     <ConstructorElement
-                        //type={filling.type}
                         text={filling.name}
                         price={filling.price}
                         thumbnail={filling.image}

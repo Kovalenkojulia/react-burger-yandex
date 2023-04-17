@@ -1,16 +1,18 @@
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './order-details.module.css'
-import {useDispatch, useSelector} from 'react-redux'
-import {createOrder, getOrder} from '../../services/slices/orderSlice'
-import { FC, useEffect } from 'react'
-
-import IngredientsItem from '../burger-ingredients/item-constructor/ingredients-item'
-
+import { FC } from 'react'
+import {getOrderIsLoading} from '../../services/slices/orderSlice'
+import { useAppSelector } from '../../hooks/hook'
 
 interface IOrderDetails {
-    orderId: number
+    orderId?: number
 }
 const OrderDetails: FC<IOrderDetails> = ({orderId}) => {
+    const isOrderLoading = useAppSelector(getOrderIsLoading)
+    if (isOrderLoading){
+        return <div>Loading...</div>
+    }
+
 
     return (
         <div className={styles.order}>

@@ -5,8 +5,11 @@ export interface IIngredient {
     proteins: number
     fat: number
     carbohydrates: number
+    calories: number;
     price: number
     image: string
+    image_mobile: string;
+    image_large: string;
 }
 
 export interface IIngredientWithUUID extends IIngredient {
@@ -88,4 +91,39 @@ export interface IPasswordResetPayload {
 
 export interface ICreateOrderPayload {
     ingredients: string[];
+}
+
+export interface IOrder {
+    _id: string;
+    ingredients: string[];
+    status: "done" | "pending" | "created";
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+}
+export interface IFeedSuccessResponse {
+    success: boolean;
+    orders: IOrder[];
+    total: number;
+    totalToday: number;
+}
+
+export interface IFeedErrorResponse {
+    success: boolean;
+    message: string;
+}
+
+export interface IWSActions {
+    onMessage: Function;
+    onError: Function;
+    open: Function;
+    close: Function;
+    initSocket: Function;
+}
+
+export interface IOrderStatuses {
+    done: "Выполнен";
+    pending: "Готовится";
+    created: "Создан";
 }

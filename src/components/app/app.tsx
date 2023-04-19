@@ -1,17 +1,11 @@
-import React, { useState, useEffect, Dispatch, FC } from 'react'
+import React, {useEffect, FC } from 'react'
 
-import AppHeader from '../app-header/app-header'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import OrderDetails from '../order-details/order-details'
-import {HTML5Backend} from 'react-dnd-html5-backend'
 
-import styles from './app.module.css'
 import MainPage from '../../pages/main/main-page'
 import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import Layout from '../layout/layout'
-import {useDispatch, useSelector} from 'react-redux'
+
 import {getCurrentUser, getUser} from '../../services/slices/userSlice'
 import {Profile} from '../../pages/profile/profile'
 import ProtectedRoute from '../protected-route/protected-route'

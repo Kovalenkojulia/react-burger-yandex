@@ -46,22 +46,22 @@ export const ForgotPassword: FC = () => {
             </div>
             <form onSubmit={handleSubmit} className={styles.form}>
 
-            <EmailInput
-                onChange={handleChange}
-                name={'email'}
-                value={email}
-                placeholder="Укажите e-mail"
-            />
+                <EmailInput
+                    onChange={handleChange}
+                    name={'email'}
+                    value={email}
+                    placeholder="Укажите e-mail"
+                />
                 {error && (
                     <p className="text text_type_main-default text_color_error">
                         {error.message}
                     </p>
                 )}
-            <div className={styles.btn}>
-                <Button htmlType="submit" type="primary" size="medium">
-                    Восстановить
-                </Button>
-            </div>
+                <div className={styles.btn}>
+                    <Button htmlType="submit" type="primary" size="medium">
+                        Восстановить
+                    </Button>
+                </div>
 
             </form>
 
@@ -72,9 +72,9 @@ export const ForgotPassword: FC = () => {
                     Вспомнили пароль?
                 </p>
                 <Link to={'/login'}>
-                <Button htmlType="button" type="secondary" size="medium">
-                    Войти
-                </Button>
+                    <Button htmlType="button" type="secondary" size="medium">
+                        Войти
+                    </Button>
                 </Link>
             </div>
 

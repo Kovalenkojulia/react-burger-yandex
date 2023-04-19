@@ -34,7 +34,7 @@ export interface ILoginFormValues {
     password: string;
 }
 
-export interface IOrder {
+export interface IOrderResponse {
     success: boolean;
     name: string;
     order: {

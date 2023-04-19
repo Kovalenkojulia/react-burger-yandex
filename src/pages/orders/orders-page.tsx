@@ -1,28 +1,33 @@
-import {FC, useEffect} from 'react'
+import React, { FC, useEffect } from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/hook'
 import OrderStatus from '../../components/order-status/order-status'
+import styles from './orders-page.module.css';
 import ProfileNavigation from '../../components/profile-navigation/profile-navigation'
-import {closeUserSocket, getUserFeedError, getUserOrders, initUserSocket} from '../../services/slices/user-feed'
-import {USER_ORDERS_API_ENDPOINT} from '../../utils/constants'
-import jsCookie from 'js-cookie'
-
-
-import styles from './orders-page.module.css'
+import {
+    closeUserSocket,
+    getUserFeedError,
+    getUserOrders,
+    initUserSocket,
+} from '../../services/slices/user-feed';
+import { USER_ORDERS_API_ENDPOINT } from '../../utils/constants';
+import jsCookie from 'js-cookie';
 
 const OrdersPage: FC = () => {
-    const dispatch = useAppDispatch()
-    const orders = useAppSelector(getUserOrders)
-    const error = useAppSelector(getUserFeedError)
+    const dispatch = useAppDispatch();
+    const orders = useAppSelector(getUserOrders);
+    const error = useAppSelector(getUserFeedError);
 
-   useEffect(()=>{
-       dispatch(
-           initUserSocket(USER_ORDERS_API_ENDPOINT + `?token=${jsCookie.get('accessToken')}`)
-       )
-       return () => {
-       dispatch(closeUserSocket())
-       }
+    useEffect(() => {
+        dispatch(
+            initUserSocket(
+                USER_ORDERS_API_ENDPOINT + `?token=${jsCookie.get("accessToken")}`
+            )
+        );
 
-   }, [dispatch])
+        return () => {
+            dispatch(closeUserSocket());
+        };
+    }, [dispatch]);
 
     if (error) {
         return (
@@ -57,7 +62,4 @@ const OrdersPage: FC = () => {
     );
 };
 
-
-
-
-export default OrdersPage
+export default OrdersPage;

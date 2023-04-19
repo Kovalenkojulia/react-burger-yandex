@@ -2,6 +2,7 @@ import {useSelector} from 'react-redux'
 import {Navigate, useLocation} from 'react-router-dom'
 import {getAuthChecked, getCurrentUser, isUserLoading} from '../../services/slices/userSlice'
 import { FC, ReactElement } from 'react'
+import {useAppSelector} from '../../hooks/hook'
 
 interface IProtectedRouteProps {
     onlyUnAuth?: boolean
@@ -9,9 +10,9 @@ interface IProtectedRouteProps {
 }
 
 const ProtectedRoute: FC<IProtectedRouteProps> =({onlyUnAuth, element})=>{
-    const user = useSelector(getCurrentUser)
-    const isLoading = useSelector(isUserLoading)
-    const authChecked = useSelector(getAuthChecked)
+    const user = useAppSelector(getCurrentUser)
+    const isLoading = useAppSelector(isUserLoading)
+    const authChecked = useAppSelector(getAuthChecked)
     const location = useLocation()
 
     if(!authChecked || isLoading){

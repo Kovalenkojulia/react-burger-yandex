@@ -1,31 +1,19 @@
 import { createSlice, createAsyncThunk, SerializedError, PayloadAction } from '@reduxjs/toolkit'
-import {ICreateOrderPayload, IOrder} from '../../types/types'
+import {ICreateOrderPayload, IOrderResponse} from '../../types/types'
 import api from '../../utils/api'
 import { RootState } from '../store'
 import {API_ENDPOINT} from '../../utils/constants'
 
 
 export const createOrder = createAsyncThunk(
-    'order/createOrder',
-    async (ingredients: ICreateOrderPayload, { rejectWithValue }) => {
-        try {
-            const response = await fetch(API_ENDPOINT + 'orders', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify(ingredients),
-            });
-            const data = await response.json();
-            return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
+    "order/createOrder",
+    async (ingredients: ICreateOrderPayload) => {
+        return await api.createOrder(ingredients);
     }
 );
 
 interface IOrderState {
-    order: IOrder | null;
+    order: IOrderResponse | null;
     error: SerializedError | null;
     loading: boolean;
 }
@@ -45,7 +33,7 @@ const orderSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(
             createOrder.fulfilled,
-            (state, { payload }: PayloadAction<IOrder>) => {
+            (state, { payload }: PayloadAction<IOrderResponse>) => {
                 state.order = payload;
                 state.loading = false;
             }

@@ -1,10 +1,10 @@
 import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-tab'
 import styles from './burger-constructor.module.css'
-import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import IngredientsItem from './item-constructor/ingredients-item'
 import {useSelector, useDispatch} from 'react-redux'
-import {fetchIngredients} from '../../services/slices/ingredientsSlice'
-import React, { FC, useEffect, useState } from 'react'
+
+import React, { FC } from 'react'
 import { useInView } from 'react-intersection-observer';
 import {Link, useLocation} from 'react-router-dom'
 import { RootState } from '../../services/store'

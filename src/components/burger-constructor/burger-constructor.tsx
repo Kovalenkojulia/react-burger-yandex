@@ -1,7 +1,7 @@
 import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
 import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import {useDispatch, useSelector} from 'react-redux'

@@ -44,7 +44,6 @@ export const Profile: FC = () => {
     };
 
     const handleSubmit = () => {
-        // @ts-ignore
         dispatch(updateUser(values));
     };
 

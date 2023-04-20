@@ -1,4 +1,3 @@
-import {useSelector} from 'react-redux'
 import {Navigate, useLocation} from 'react-router-dom'
 import {getAuthChecked, getCurrentUser, isUserLoading} from '../../services/slices/userSlice'
 import { FC, ReactElement } from 'react'

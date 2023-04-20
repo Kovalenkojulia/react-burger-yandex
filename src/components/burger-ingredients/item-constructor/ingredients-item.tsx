@@ -1,10 +1,8 @@
 import styles from './item-constructor.module.css'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientDetails from '../../ingredient-details/ingredient-details'
-import Modal from '../../modal/modal'
 import React, {useState} from 'react'
 import {useDrag} from 'react-dnd'
-import {useDispatch, useSelector} from 'react-redux'
+import {useAppDispatch, useAppSelector} from '../../../hooks/hook'
 import {IIngredient} from '../../../types/types'
 import { RootState } from '../../../services/store'
 
@@ -14,10 +12,10 @@ interface Props {
     title?: string
 }
 const IngredientsItem = ({ingredient, title, type}: Props) => {
-    const dispatch =useDispatch()
-    // @ts-ignore
-    const countValue = useSelector((state: RootState) => state.ingredientsConstructor.counters[ingredient._id])
-    //console.log(countValue)
+    const dispatch =useAppDispatch()
+
+    const countValue = useAppSelector((state: RootState) => state.ingredientsConstructor.counters[ingredient._id])
+
 
     const [isModalOpened, setIsModalOpened] = useState(false)
     const onOpen = () => {

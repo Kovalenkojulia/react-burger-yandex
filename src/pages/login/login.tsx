@@ -1,26 +1,23 @@
 import styles from './login.module.css';
 import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import { Dispatch, useState } from 'react'
 import {Link} from 'react-router-dom'
 import {useForm} from '../../hooks/useForm'
-import {useDispatch, useSelector} from 'react-redux'
+import {useAppDispatch, useAppSelector} from '../../hooks/hook'
 import {getLoginError, loginUser} from '../../services/slices/userSlice'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
+
 
 interface IUserLogin {
     email: string
     password: string
 }
 export function LoginPage() {
-    const dispatch: Dispatch<any> | ThunkDispatch<any, any, AnyAction> = useDispatch();
-    const error = useSelector(getLoginError);
+    const dispatch = useAppDispatch()
+    const error = useAppSelector(getLoginError);
     const { values, handleChange } = useForm<IUserLogin>({email: '', password: ''});
     const { email = "", password = "" } = values;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        // @ts-ignore
         dispatch(loginUser(values));
     };
 

@@ -1,18 +1,18 @@
 import styles from './reset-password.module.css'
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useCallback, useEffect, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { useEffect} from 'react'
+import {useAppDispatch, useAppSelector} from '../../hooks/hook'
 import {Link, useLocation, useNavigate,} from 'react-router-dom'
 import {resetPassword, getResetPasswordError} from '../../services/slices/userSlice'
 import {useForm} from '../../hooks/useForm'
-import {IPasswordResetPayload, IUserAuthSuccessUserResponse} from '../../types/types'
+import { IPasswordResetPayload, IUserAuthSuccessUserResponse } from '../../types/types'
 
 
 export function ResetPassword () {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const error = useSelector(getResetPasswordError);
+    const error = useAppSelector(getResetPasswordError);
     const { values, handleChange } = useForm<IPasswordResetPayload>({
         password: '',
         token: ''
@@ -27,9 +27,8 @@ export function ResetPassword () {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        // @ts-ignore
-        dispatch<any>(resetPassword({ password, token })).then(({ payload }) => {
-            if (payload?.success) {
+        dispatch(resetPassword({ password, token })).then(({ payload }) => {
+            if ((payload as IUserAuthSuccessUserResponse)?.success) {
                 navigate("/login", { replace: true });
             }
         });

@@ -4,7 +4,7 @@ import styles from './burger-ingredients.module.css'
 import { FC, useRef, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import {useDispatch, useSelector} from 'react-redux'
+import {useAppSelector, useAppDispatch} from '../../hooks/hook'
 
 import {
     addIngredient,
@@ -21,13 +21,13 @@ import {useNavigate} from 'react-router-dom'
 import {IIngredient, IIngredientWithUUID} from '../../types/types'
 
 const BurgerConstructor: FC = () => {
-    const dispatch = useDispatch()
-    const user = useSelector(getCurrentUser)
+    const dispatch = useAppDispatch()
+    const user = useAppSelector(getCurrentUser)
     const navigate = useNavigate()
-    const totalPrice = useSelector(getTotalPrice)
-    const bun = useSelector(getConstructorBun)
-    const fillings = useSelector(getConstructorFillings)
-    const order = useSelector(getOrder)
+    const totalPrice = useAppSelector(getTotalPrice)
+    const bun = useAppSelector(getConstructorBun)
+    const fillings = useAppSelector(getConstructorFillings)
+    const order = useAppSelector(getOrder)
     //const orderId = order?.order?.number
     const modalRef = useRef()
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -56,8 +56,7 @@ const BurgerConstructor: FC = () => {
             navigate('/login')
         } else if (bun) {
             setIsModalVisible(true)
-            // @ts-ignore
-            dispatch<any>(createOrder({
+            dispatch(createOrder({
                 ingredients: [
                     bun._id,
                     ...fillings.map((filling: IIngredient) => filling._id),
@@ -69,9 +68,7 @@ const BurgerConstructor: FC = () => {
 
 
     const handleClose = () => {
-        //if (!order) return;
         dispatch(resetConstructor());
-        //dispatch(resetOrder())
         setIsModalVisible(false)
     }
 

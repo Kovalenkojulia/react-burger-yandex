@@ -2,7 +2,7 @@ import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-ta
 import styles from './burger-constructor.module.css'
 
 import IngredientsItem from './item-constructor/ingredients-item'
-import {useSelector, useDispatch} from 'react-redux'
+import {useAppSelector} from '../../hooks/hook'
 
 import React, { FC } from 'react'
 import { useInView } from 'react-intersection-observer';
@@ -20,7 +20,7 @@ interface IRootState {
 }
 const BurgerIngredients: FC = () => {
     const location = useLocation()
-    const {data, loading, error} = useSelector((state: IRootState) => state.ingredients)
+    const {data, isLoading, hasError} = useAppSelector((state) => state.ingredients)
     const [currentTab, setCurrentTab] = React.useState("bun");
     const [bunRef] = useInView({
         threshold: 0.5, onChange: (inView) => inView && setCurrentTab('bun')
@@ -41,11 +41,11 @@ const BurgerIngredients: FC = () => {
     };
 
 
-    if(loading && !data.length) {
+    if(isLoading && !data.length) {
         return <p>Loading...</p>
     }
-    if(error) {
-        return <p>{error}</p>
+    if(hasError) {
+        return <p>{hasError.message}</p>
     }
 
 

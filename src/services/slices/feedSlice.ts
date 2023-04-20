@@ -59,10 +59,9 @@ export const getOrders = (state: RootState) => state.feed.orders;
 export const getTotalOrders = (state: RootState) => state.feed.total;
 export const getTotalTodayOrders = (state: RootState) => state.feed.totalToday;
 export const getActiveOrder = (state: RootState) => state.feed.activeOrder;
-// @ts-ignore
 export const getDoneOrders = (state: RootState) =>
     state.feed.orders.filter((order) => order.status === "done");
-// @ts-ignore
+
 export const getPendingOrders = (state: RootState) =>
     state.feed.orders.filter((order) => order.status === "pending");
 export const getFeedError = (state: RootState) => state.feed.error;

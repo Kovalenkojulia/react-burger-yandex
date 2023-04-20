@@ -1,13 +1,11 @@
 import styles from './forgot-password.module.css'
 import {Button, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import { Dispatch, FC, useState } from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { FC } from 'react'
 import {getForgotPasswordError, forgotPassword} from '../../services/slices/userSlice'
 import {useForm} from '../../hooks/useForm'
 import {Link, useNavigate} from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/hook'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
+
 
 interface IForgotPasswordForm {
     email: string
@@ -15,7 +13,7 @@ interface IForgotPasswordForm {
 
 
 export const ForgotPassword: FC = () => {
-    const dispatch: Dispatch<any> | ThunkDispatch<any, any, AnyAction> = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const error = useAppSelector(getForgotPasswordError)
     const {values, handleChange} = useForm<IForgotPasswordForm>({email: ''})
@@ -23,8 +21,8 @@ export const ForgotPassword: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
-        dispatch<any>(forgotPassword(email)).then(({ payload}: {payload: any}) => {
+
+        dispatch(forgotPassword(email)).then(({ payload}: {payload: any}) => {
             if ((payload)?.success) {
                 navigate("/reset-password", {
                     state: {

@@ -39,4 +39,5 @@
 .ingredients {
     position: relative;
     height: 64px;
+    z-index: 1;
 }

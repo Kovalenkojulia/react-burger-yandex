@@ -1,12 +1,13 @@
 import styles from './profile.module.css'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { FC, useEffect, useRef, useState } from 'react'
-import {Link, NavLink} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
 import {getCurrentUser, getUpdateUserError, logoutUser, updateUser} from '../../services/slices/userSlice'
 import { useForm} from '../../hooks/useForm'
 import clsx from 'clsx'
 import {IUserRegister} from '../../types/types'
+import {useAppSelector, useAppDispatch} from '../../hooks/hook'
+import ProfileNavigation from '../../components/profile-navigation/profile-navigation'
+
 
 const initialState: IUserRegister = {
     name: '',
@@ -14,105 +15,64 @@ const initialState: IUserRegister = {
     password:''
 }
 
-export const Profile: FC =()=> {
+export const Profile: FC = () => {
+    const dispatch = useAppDispatch();
+    const error = useAppSelector(getUpdateUserError);
+    const user = useAppSelector(getCurrentUser);
+    const { values, setValues, handleChange } =
+        useForm<IUserRegister>(initialState);
+    let { name, email, password } = values;
 
-    /**const inputRef = useRef(null)
-    const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0)
-        alert('Icon Click Callback')
-    }**/
+    const isEditMode = user?.name !== name || user?.email !== email || password;
 
-    const dispatch = useDispatch()
-    const user = useSelector(getCurrentUser)
-    const { values, handleChange, setValues } = useForm<IUserRegister>(initialState)
-    let {name = '', email = '', password = ''} = values
-    const isEditMode = user?.name !== name || user?.email !== email || password
-    const error = useSelector(getUpdateUserError)
-
-    useEffect(()=>{
-        if(user){
-            setValues(user);
+    useEffect(() => {
+        if (user) {
+            setValues({
+                ...user,
+                password: "",
+            });
         }
-    }, [user, setValues])
-
-    const linkClassName = ({isActive}: {isActive: boolean})=>{
-        return clsx(
-            "text text_type_main-medium",
-            isActive ? "menu-link_active" : "menu-link_inactive"
-        )
-    }
-    const handleLogout = () => {
-        dispatch<any>(logoutUser())
-    }
+    }, [user, setValues]);
 
     const handleReset = () => {
         if (user) {
-            setValues(user)
+            setValues({
+                ...user,
+                password: "",
+            });
         }
-    }
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        // @ts-ignore
-        dispatch<any>(updateUser(values))
-    }
+    };
+
+    const handleSubmit = () => {
+        dispatch(updateUser(values));
+    };
+
     return (
-        <main className={styles.page}>
+        <main className={styles.main}>
             <div>
-                <nav>
-                    <ul>
-                        <li className={styles.profileLink}>
-                            <NavLink to={'/profile'} className={linkClassName} >
-                                Профиль
-                            </NavLink>
-                        </li>
-                        <li className={styles.profileLink}>
-                            <NavLink to={'/orders'} className={linkClassName}>
-                                История заказов
-                            </NavLink>
-                        </li>
-                        <li className={styles.profileLink}>
-                            <NavLink to={'/login'} className={linkClassName} >
-                            <button className={clsx(styles.button, "text text_type_main-medium ")} onClick={handleLogout}>
-                                Выход
-                            </button>
-
-                        </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-
+                <ProfileNavigation />
                 <p className="text text_type_main-default text_color_inactive mt-20">
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
             </div>
-
             <form className={styles.form} onSubmit={handleSubmit}>
                 <Input
-                    type={'text'}
-                    placeholder={'Имя'}
-                    onChange={handleChange}
-                    icon="EditIcon"
                     value={name}
-                    name={'name'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="ml-1"
-                />
-                <EmailInput
+                    name="name"
+                    placeholder="Имя"
                     onChange={handleChange}
+                />
+                <Input
                     value={email}
-                    name={'email'}
+                    name="email"
                     placeholder="Логин"
-                    isIcon={true}
-                    extraClass="mb-2"
+                    onChange={handleChange}
                 />
                 <PasswordInput
-                    onChange={handleChange}
                     value={password}
-                    name={'password'}
-                    icon="EditIcon"
-                    />
+                    name="password"
+                    onChange={handleChange}
+                />
                 {error && (
                     <p className="text text_type_main-default text_color_error">
                         {error.message}
@@ -120,15 +80,15 @@ export const Profile: FC =()=> {
                 )}
                 {isEditMode && (
                     <div className={styles.buttons}>
-                        <Button htmlType={'reset'} type={'secondary'} onClick={handleReset}>
+                        <Button onClick={handleReset} htmlType="reset" type="secondary">
                             Отмена
                         </Button>
-                        <Button htmlType={'submit'}>Сохранить</Button>
+                        <Button htmlType="submit">Сохранить</Button>
                     </div>
                 )}
-
             </form>
         </main>
+    );
+};
 
-    )
-}
+

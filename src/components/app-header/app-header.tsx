@@ -2,7 +2,8 @@ import {BurgerIcon, Button, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/rea
 import styles from './app-header.module.css'
 import {Link, NavLink} from 'react-router-dom'
 import clsx from 'clsx'
-const AppHeader = () => {
+import { FC } from 'react'
+const AppHeader: FC = () => {
     const linkClassName = ({isActive}: {isActive: boolean}) => {
         return clsx(styles.menuLink,{
             [styles.menuLink_inactive]: !isActive
@@ -29,7 +30,7 @@ const AppHeader = () => {
                     </div>
 
                     <div className={styles.item}>
-                        <NavLink to={'/orders'} className={linkClassName}>
+                        <NavLink to={'/feed'} className={linkClassName}>
                             {(isActive)=>(
                                 <>
                                     <ListIcon type="primary" />

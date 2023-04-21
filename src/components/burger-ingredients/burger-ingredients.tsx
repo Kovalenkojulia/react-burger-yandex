@@ -1,10 +1,10 @@
 import BurgerConstructorTab from './burger-constructor-tab/burger-constructor-tab'
 import styles from './burger-constructor.module.css'
-import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import IngredientsItem from './item-constructor/ingredients-item'
-import {useSelector, useDispatch} from 'react-redux'
-import {fetchIngredients} from '../../services/slices/ingredientsSlice'
-import React, { FC, useEffect, useState } from 'react'
+import {useAppSelector} from '../../hooks/hook'
+
+import React, { FC } from 'react'
 import { useInView } from 'react-intersection-observer';
 import {Link, useLocation} from 'react-router-dom'
 import { RootState } from '../../services/store'
@@ -20,7 +20,7 @@ interface IRootState {
 }
 const BurgerIngredients: FC = () => {
     const location = useLocation()
-    const {data, loading, error} = useSelector((state: IRootState) => state.ingredients)
+    const {data, isLoading, hasError} = useAppSelector((state) => state.ingredients)
     const [currentTab, setCurrentTab] = React.useState("bun");
     const [bunRef] = useInView({
         threshold: 0.5, onChange: (inView) => inView && setCurrentTab('bun')
@@ -41,11 +41,11 @@ const BurgerIngredients: FC = () => {
     };
 
 
-    if(loading && !data.length) {
+    if(isLoading && !data.length) {
         return <p>Loading...</p>
     }
-    if(error) {
-        return <p>{error}</p>
+    if(hasError) {
+        return <p>{hasError.message}</p>
     }
 
 

@@ -1,6 +1,5 @@
 import styles from './modal-overlay.module.css'
-import PropTypes from 'prop-types'
-import { FC, MouseEventHandler } from 'react'
+import { FC } from 'react'
 
 interface IModalOverLay {
     onClick: () => void

@@ -1,10 +1,10 @@
 import BurgerIngredientsItem from './burger-ingredients-item/burger-ingredients-item'
 import {Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import {useDispatch, useSelector} from 'react-redux'
+import {useAppSelector, useAppDispatch} from '../../hooks/hook'
 
 import {
     addIngredient,
@@ -16,20 +16,19 @@ import {
 import {useDrop} from 'react-dnd'
 import {nanoid} from '@reduxjs/toolkit'
 import {createOrder, getOrder} from '../../services/slices/orderSlice'
-import {resetOrder} from '../../services/slices/orderSlice'
 import {getCurrentUser} from '../../services/slices/userSlice'
 import {useNavigate} from 'react-router-dom'
 import {IIngredient, IIngredientWithUUID} from '../../types/types'
 
-const BurgerConstructor = () => {
-    const dispatch = useDispatch()
-    const user = useSelector(getCurrentUser)
+const BurgerConstructor: FC = () => {
+    const dispatch = useAppDispatch()
+    const user = useAppSelector(getCurrentUser)
     const navigate = useNavigate()
-    const totalPrice = useSelector(getTotalPrice)
-    const bun = useSelector(getConstructorBun)
-    const fillings = useSelector(getConstructorFillings)
-    const order = useSelector(getOrder)
-    const orderId = order?.order?.number
+    const totalPrice = useAppSelector(getTotalPrice)
+    const bun = useAppSelector(getConstructorBun)
+    const fillings = useAppSelector(getConstructorFillings)
+    const order = useAppSelector(getOrder)
+    //const orderId = order?.order?.number
     const modalRef = useRef()
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -55,10 +54,9 @@ const BurgerConstructor = () => {
     const handleOrderClick = () => {
         if (!user) {
             navigate('/login')
-        } else {
+        } else if (bun) {
             setIsModalVisible(true)
-            // @ts-ignore
-            dispatch<any>(createOrder({
+            dispatch(createOrder({
                 ingredients: [
                     bun._id,
                     ...fillings.map((filling: IIngredient) => filling._id),
@@ -70,12 +68,12 @@ const BurgerConstructor = () => {
 
 
     const handleClose = () => {
-        if (!order) return;
         dispatch(resetConstructor());
-        dispatch(resetOrder())
+        setIsModalVisible(false)
     }
 
-    // @ts-ignore
+
+
     return (
         <>
             <div ref={dropTargetRef} className={styles.elements}>
@@ -130,9 +128,12 @@ const BurgerConstructor = () => {
                     </div>
                 </div>
             </div>
-            {orderId && (
+            {isModalVisible && (
                 <Modal onClose={handleClose}>
-                    <OrderDetails orderId={orderId}/>
+                    {order && (
+                        <OrderDetails orderId={order?.order?.number}/>
+                    )}
+
                 </Modal>
             )}
         </>

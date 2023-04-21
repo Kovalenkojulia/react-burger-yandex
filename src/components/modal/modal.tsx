@@ -1,18 +1,20 @@
 import {createPortal} from 'react-dom'
 import ModalOverlay from '../modal-overlay/modal-overlay'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import { FC, ReactNode, useEffect, useState } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 import styles from './modal.module.css'
-import PropTypes from 'prop-types'
+import clsx from 'clsx'
 
 const portal = document.getElementById('modal') as HTMLElement
 
 interface IModalProps {
     onClose: () => void
     children: ReactNode
-    title?: string
+    title?: string | number
 }
 const Modal: FC<IModalProps> = ({children, title, onClose}) => {
+
+    const renderTitle = typeof title === "number" ? `#${title}` : title;
     useEffect(() => {
         function closeByEscape(evt: KeyboardEvent) {
             if(evt.key === 'Escape') {
@@ -27,6 +29,11 @@ const Modal: FC<IModalProps> = ({children, title, onClose}) => {
 
     }, [])
 
+    const titleClassNames = clsx("text", {
+        "text_type_main-large": typeof title === "string",
+        "text_type_digits-default": typeof title === "number",
+    });
+
 
     return (
 
@@ -36,9 +43,7 @@ const Modal: FC<IModalProps> = ({children, title, onClose}) => {
                 <div className={styles.modal}>
                     <div className={styles.modalHeader}>
                         <div className={styles.title}>
-                            <p className="text text_type_main-medium">
-                                {title || ''}
-                            </p>
+                            {renderTitle && <p className={titleClassNames}>{renderTitle}</p>}
                             <button className={styles.button} onClick={onClose}>
                                 <CloseIcon type="primary" />
                             </button>

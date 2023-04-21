@@ -1,37 +1,56 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit'
 import api from "../../utils/api";
 import jsCookie from "js-cookie";
+import {IPasswordResetPayload, IUser, IUserAuthStatusResponse, IUserAuthSuccessCurrentUserResponse, IUserAuthSuccessUserResponse, IUserRegister, ILoginFormValues} from '../../types/types'
+import { RootState } from '../store'
 
 export const registerUser = createAsyncThunk(
     "user/registerUser",
-    async (data) => {
+    async (data: IUserRegister) => {
         const result = await api.registerUser(data);
 
-        if (result.success) {
-            api.setCookiesFromResponse(result);
+        if (!result.success) {
+            const registrationErrorResponse = result as IUserAuthStatusResponse
+            return Promise.reject({error: registrationErrorResponse.message})
         }
-        return result;
+        const registrationSuccesResponse = result as IUserAuthSuccessUserResponse;
+        api.setCookiesFromResponse(registrationSuccesResponse);
+        return registrationSuccesResponse
     }
 );
 
-export const loginUser = createAsyncThunk("user/loginUser", async (data) => {
+export const loginUser = createAsyncThunk("user/loginUser", async (data: ILoginFormValues) => {
     const result = await api.loginUser(data);
 
-    if (result.success) {
-        api.setCookiesFromResponse(result);
+    if (!result.success) {
+       const loginErrorResponse = result as IUserAuthStatusResponse;
+       return Promise.reject({error: loginErrorResponse.message})
     }
-    return result;
+    const loginSuccessResponse = result as IUserAuthSuccessUserResponse;
+    api.setCookiesFromResponse(loginSuccessResponse)
+    return loginSuccessResponse
+
 });
 
-export const updateUser = createAsyncThunk("user/updateUser", async (data) => {
-    return api.updateUser(data);
+export const updateUser = createAsyncThunk("user/updateUser", async (data: IUserRegister) => {
+    const result = await api.updateUser(data)
+    if (!result.success){
+        const errorResponse = result as IUserAuthStatusResponse
+        return Promise.reject({error: errorResponse.message})
+    }
+    return result as IUserAuthSuccessUserResponse
 });
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
     if (!jsCookie.get("accessToken") && !jsCookie.get("refreshToken")) {
         return Promise.reject({ message: "No token" });
     }
-    return api.getUser();
+    const result = await  api.getUser()
+    if(!result.success){
+        const errorResponse = result as IUserAuthStatusResponse
+        return Promise.reject({error: errorResponse.message})
+    }
+    return result as IUserAuthSuccessCurrentUserResponse
 });
 
 export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
@@ -46,19 +65,30 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
 
 export const forgotPassword = createAsyncThunk(
     "user/forgotPassword",
-    async (email) => {
+    async (email: string) => {
         return api.resetPassword(email);
     }
 );
 
 export const resetPassword = createAsyncThunk(
     "user/resetPassword",
-    async ({ password, token }) => {
+    async ({ password, token }: IPasswordResetPayload) => {
         return api.resetPasswordWithToken(password, token);
     }
 );
-
-const initialState = {
+interface IUserState {
+    user: IUser | null;
+    error: SerializedError | null;
+    loginError: SerializedError | null;
+    registerError: SerializedError | null;
+    logoutError: SerializedError | null;
+    updateUserError: SerializedError | null;
+    forgotPasswordError: SerializedError | null;
+    resetPasswordError: SerializedError | null;
+    loading: boolean;
+    authChecked: boolean;
+}
+const initialState: IUserState = {
     user: null,
     error: null,
     loginError: null,
@@ -76,7 +106,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+        builder.addCase(registerUser.fulfilled, (state, { payload }: PayloadAction<IUserAuthSuccessUserResponse>) => {
             state.user = payload.user;
             state.authChecked = true;
             state.loading = false;
@@ -92,7 +122,7 @@ const userSlice = createSlice({
             state.registerError = initialState.registerError;
             state.loading = true;
         });
-        builder.addCase(loginUser.fulfilled, (state, { payload }) => {
+        builder.addCase(loginUser.fulfilled, (state, { payload }: PayloadAction<IUserAuthSuccessUserResponse>) => {
             state.user = payload.user;
             state.authChecked = true;
             state.loading = false;
@@ -108,11 +138,9 @@ const userSlice = createSlice({
             state.loginError = initialState.loginError;
             state.loading = true;
         });
-        builder.addCase(logoutUser.fulfilled, (state, { payload }) => {
+        builder.addCase(logoutUser.fulfilled, (state) => {
             state.loading = false;
-            if (payload.success) {
-                state.user = initialState.user;
-            }
+            state.user = initialState.user
         });
         builder.addCase(logoutUser.rejected, (state, { error }) => {
             console.log(error);
@@ -123,12 +151,10 @@ const userSlice = createSlice({
             state.logoutError = initialState.logoutError;
             state.loading = true;
         });
-        builder.addCase(getUser.fulfilled, (state, { payload }) => {
+        builder.addCase(getUser.fulfilled, (state, { payload }: PayloadAction<IUserAuthSuccessCurrentUserResponse>) => {
             state.loading = false;
             state.authChecked = true;
-            if (payload.success) {
-                state.user = payload.user;
-            }
+            state.user = payload.user
         });
         builder.addCase(getUser.rejected, (state, { error }) => {
             console.log(error);
@@ -140,11 +166,9 @@ const userSlice = createSlice({
             state.error = initialState.error;
             state.loading = true;
         });
-        builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+        builder.addCase(updateUser.fulfilled, (state, { payload }: PayloadAction<IUserAuthSuccessUserResponse>) => {
             state.loading = false;
-            if (payload.success) {
-                state.user = payload.user;
-            }
+            state.user = payload.user
         });
         builder.addCase(updateUser.rejected, (state, { error }) => {
             console.log(error);
@@ -185,13 +209,13 @@ const userSlice = createSlice({
 export default userSlice.reducer
 
 //export const getCurrentUser = (state) => state.user.user;
-export const getCurrentUser = (state) => state.user.user;
-export const isUserLoading = (state) => state.user.loading;
-export const getUserError = (state) => state.user.error;
-export const getLoginError = (state) => state.user.loginError;
-export const getRegisterError = (state) => state.user.registerError;
-export const getLogoutError = (state) => state.user.logoutError;
-export const getUpdateUserError = (state) => state.user.updateUserError;
-export const getForgotPasswordError = (state) => state.user.forgotPasswordError;
-export const getResetPasswordError = (state) => state.user.resetPasswordError;
-export const getAuthChecked = (state) => state.user.authChecked;
+export const getCurrentUser = (state: RootState) => state.user.user;
+export const isUserLoading = (state: RootState) => state.user.loading;
+export const getUserError = (state: RootState) => state.user.error;
+export const getLoginError = (state: RootState) => state.user.loginError;
+export const getRegisterError = (state: RootState) => state.user.registerError;
+export const getLogoutError = (state: RootState) => state.user.logoutError;
+export const getUpdateUserError = (state: RootState) => state.user.updateUserError;
+export const getForgotPasswordError = (state: RootState) => state.user.forgotPasswordError;
+export const getResetPasswordError = (state: RootState) => state.user.resetPasswordError;
+export const getAuthChecked = (state: RootState) => state.user.authChecked;

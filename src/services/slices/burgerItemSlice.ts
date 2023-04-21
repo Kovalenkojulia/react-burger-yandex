@@ -24,5 +24,5 @@ const initialState = {
 export default burgerItemSlice.reducer
 export const {openModal, closeModal} = burgerItemSlice.actions
 
-//export const getActiveIngredient = state => state.ingredient.ingredient
+
 

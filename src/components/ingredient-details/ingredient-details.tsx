@@ -1,10 +1,9 @@
-import styles from './ingredient-details.module.css'
-
-import {useDispatch, useSelector} from 'react-redux'
+import {useAppDispatch, useAppSelector} from '../../hooks/hook'
 import {getActiveIngredient, setActiveIngredient} from '../../services/slices/ingredient'
 import {useParams} from 'react-router-dom'
-import {fetchIngredients, getIngredients} from '../../services/slices/ingredientsSlice'
+
 import {useEffect, FC} from 'react'
+import styles from './ingredient-details.module.css'
 import clsx from 'clsx'
 
 interface IIngredientDetailProps {
@@ -12,10 +11,9 @@ interface IIngredientDetailProps {
 }
 
 const IngredientDetails: FC<IIngredientDetailProps> = ({ outsideModal}) => {
-    const dispatch = useDispatch()
-    //const ingredients = useSelector(getIngredients)
-    const ingredients = useSelector((state: any) => state.ingredients.data)
-    const ingredient = useSelector(getActiveIngredient)
+    const dispatch = useAppDispatch()
+    const ingredients = useAppSelector((state) => state.ingredients.data)
+    const ingredient = useAppSelector(getActiveIngredient)
     console.log(ingredients)
 
 
@@ -26,7 +24,7 @@ const IngredientDetails: FC<IIngredientDetailProps> = ({ outsideModal}) => {
             console.log('id:', id);
             dispatch(
                 setActiveIngredient(
-                    ingredients.find((ingredient: any)=>{
+                    ingredients.find((ingredient)=>{
                         return ingredient._id === id
                     })
                 )

@@ -1,5 +1,5 @@
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {useDispatch} from 'react-redux'
+import {useAppDispatch} from '../../../hooks/hook'
 import { FC, useRef } from 'react'
 import {removeFilling, sortIngredients} from '../../../services/slices/burgerConstructorSlice'
 import { useDrag, useDrop, XYCoord } from 'react-dnd'
@@ -12,7 +12,7 @@ interface IBurgerIngredientsItemProps {
     index: number
 }
 const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = ({filling, index}) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const dropRef = useRef<HTMLDivElement>(null)
     const [, drop] = useDrop({
         accept: 'constructorIngredient',
@@ -28,7 +28,6 @@ const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = ({filling, index}
                 return
             }
 
-            // @ts-ignore
             const hoverBoundingRect = dropRef.current?.getBoundingClientRect()
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
@@ -77,7 +76,6 @@ const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = ({filling, index}
                 </div>
                 <div className={styles.ingredient}>
                     <ConstructorElement
-                        //type={filling.type}
                         text={filling.name}
                         price={filling.price}
                         thumbnail={filling.image}

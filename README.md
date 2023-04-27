@@ -19,8 +19,9 @@ This project was created with Create React App. You could make your personal bur
 ---
 
 ## Scripts
-_Start localy_  npm run start
-_Run tests_ npm run cypress:open
+**Start localy**  npm run start 
+
+**Run tests** npm run cypress:open
 
 ---
 

@@ -76,7 +76,7 @@ const BurgerConstructor: FC = () => {
 
     return (
         <>
-            <div ref={dropTargetRef} className={styles.elements}>
+            <div ref={dropTargetRef} className={styles.elements} data-cy={"ConstructorContainer"}>
                 <div className={styles.element}>
                     {bun && (
                         <ConstructorElement

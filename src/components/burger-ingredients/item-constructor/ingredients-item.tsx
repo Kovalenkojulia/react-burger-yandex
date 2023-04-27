@@ -35,7 +35,7 @@ const IngredientsItem = ({ingredient, title, type}: Props) => {
                 {countValue > 0 && <Counter count={countValue} size="default" extraClass="m-1" /> }
 
 
-                <img ref={dragRef} src={ingredient.image} alt={ingredient.name}/>
+                <img ref={dragRef} src={ingredient.image} alt={ingredient.name} data-cy={"BurgerIngredient"}/>
                 <div className={styles.icon}>
                     <p className="text text_type_digits-default">{ingredient.price}</p>
                     <CurrencyIcon type="primary"/>

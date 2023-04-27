@@ -6,7 +6,7 @@ import {
 } from "../../types/types";
 import { RootState } from "../store";
 
-interface IIngredientsConstructorState {
+export interface IIngredientsConstructorState {
     fillings: IIngredientWithUUID[];
     bun: IIngredient | null;
     counters: {
@@ -14,7 +14,7 @@ interface IIngredientsConstructorState {
     };
 }
 
-const initialState: IIngredientsConstructorState = {
+export const initialState: IIngredientsConstructorState = {
     fillings: [],
     bun: null,
     counters: {},

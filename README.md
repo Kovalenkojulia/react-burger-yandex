@@ -1,6 +1,6 @@
 # React-Burger App
 
-****
+
 This project was created with Create React App. You could make your personal burger [here](https://react-burger-space.netlify.app)
 ---
 

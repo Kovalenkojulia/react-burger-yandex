@@ -1,5 +1,7 @@
 # React-Burger App
 
+Interstellar Burger App. It includes a homepage, an order feed, and a personal account page. On this website, you can customize your burger to your liking. The order feed is a shared feed of all the burgers that have been made, and you can track your order by its number. The personal account page contains user information and order history.
+
 
 This project was created with Create React App. You could make your personal burger [here](https://react-burger-space.netlify.app)
 ---

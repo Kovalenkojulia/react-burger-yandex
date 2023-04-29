@@ -85,6 +85,7 @@ const BurgerConstructor: FC = () => {
                             text={`${bun.name} (верх)`}
                             price={bun.price}
                             thumbnail={bun.image}
+                            data-cy={'bun'}
                         />
                     )
 
@@ -92,7 +93,7 @@ const BurgerConstructor: FC = () => {
 
 
                 </div>
-                <div className={styles.scroller}>
+                <div className={styles.scroller} data-cy={'main'}>
                     {
                         fillings.map((filling: IIngredientWithUUID, index: number
                         ) => (

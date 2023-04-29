@@ -1,10 +1,11 @@
+import {testUrl} from '../../src/utils/constants'
 
 describe('constructor tests', () => {
     beforeEach('should open', () => {
         cy.setCookie('accessToken', 'token')
         cy.intercept('GET', 'api/auth/user', {fixture: 'user.json'})
         cy.intercept('POST', 'api/orders', {fixture: 'order.json'})
-        cy.visit('http://localhost:3000')
+        cy.visit(testUrl)
     })
 
     it('should add ingredients, make order and close modal', () => {

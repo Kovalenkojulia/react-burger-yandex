@@ -1,14 +1,7 @@
-import reducer, { addFeedOrders, setFeedActiveOrder, setFeedError, IFeedState } from './feedSlice'
+import reducer, { addFeedOrders, setFeedActiveOrder, setFeedError, IFeedState, initialState } from './feedSlice'
 
 test("should return the initial state", () => {
-    expect(reducer(undefined, { type: undefined })).toEqual({
-        orders: [],
-        activeOrder: null,
-        total: null,
-        totalToday: null,
-        error: null,
-        loading: false,
-    });
+    expect(reducer(undefined, { type: undefined })).toEqual(initialState);
 });
 
 test("should handle orders add to feed", () => {

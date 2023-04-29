@@ -61,7 +61,7 @@ const BurgerIngredients: FC = () => {
                             Булки
                         </p>
 
-                        <div className={styles.item} key={'bun'} id={'bun'}>
+                        <div className={styles.item} key={'bun'} id={'bun'} data-cy="bun">
                             {data.filter(el => el.type === 'bun').map((el: IIngredient) =>
                                      (
                                          <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links} data-cy={"IngredientLink"}>
@@ -82,7 +82,7 @@ const BurgerIngredients: FC = () => {
                         <p className="text text_type_main-medium mt-10">
                             Соусы
                         </p>
-                        <div className={styles.item} key={'sauce'} id={'sauce'} >
+                        <div className={styles.item} key={'sauce'} id={'sauce'} data-cy={'main'} >
                             {data.filter(el => el.type === 'sauce').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links} data-cy={"IngredientLink"}>
@@ -100,7 +100,7 @@ const BurgerIngredients: FC = () => {
                             Начинки
                         </p>
 
-                        <div className={styles.item} key={'main'} id={'main'} >
+                        <div className={styles.item} key={'main'} id={'main'} data-cy={'main'} >
                             {data.filter(el => el.type === 'main').map((el: IIngredient) =>
                                  (
                                     <Link key={el._id} to={`/ingredients/${el._id}`} state={{backgroundLocation: location}} className={styles.links} data-cy={"IngredientLink"}>

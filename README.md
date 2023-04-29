@@ -24,8 +24,15 @@ The following technologies were used for developing this project:
 
 - Clone the repository to your computer using the command **git clone** https://github.com/Kovalenkojulia/react-burger-yandex
 - Navigate to the project folder using the command **cd repo**
-- Install the dependencies using the command ***yarn install**
+- Install the dependencies using the command **yarn install**
 - Start the project using the command **npm start**
+---
+### How to deploy to Netlify:
+
+- Create a new site on the Netlify platform
+- Configure the build settings for your project on Netlify
+- Link your GitHub repository to Netlify
+- Click the "Deploy" button on your site's page on Netlify
 
 ---
 
@@ -35,6 +42,6 @@ The following technologies were used for developing this project:
 **Run tests**  yarn cypress:open
 
 ---
-
+Link to the deployed site: https://react-burger-space.netlify.app
 
 

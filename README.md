@@ -4,7 +4,10 @@
 This project was created with Create React App. You could make your personal burger [here](https://react-burger-space.netlify.app)
 ---
 
-## Build with
+## Technologies
+
+The following technologies were used for developing this project:
+
 - HTML
 - SCSS
 - React(Function Components, Custom Hooks)
@@ -17,11 +20,19 @@ This project was created with Create React App. You could make your personal bur
 - Tests (Jest, Cypress)
 
 ---
+### How to download and run:
+
+- Clone the repository to your computer using the command **git clone** https://github.com/Kovalenkojulia/react-burger-yandex
+- Navigate to the project folder using the command **cd repo**
+- Install the dependencies using the command ***yarn install**
+- Start the project using the command **npm start**
+
+---
 
 ## Scripts
-**Start localy**  npm run start 
+**Start localy**  yarn start 
 
-**Run tests** npm run cypress:open
+**Run tests**  yarn cypress:open
 
 ---
 

@@ -1,4 +1,4 @@
-import { ICategoriesNames, IWSActions, IOrderStatuses } from '../types/types'
+import { ICategoriesNames, IWSActions, IOrderStatuses, IOrder } from '../types/types'
 import { addFeedOrders, setFeedError, openSocket, closeSocket, initSocket } from '../services/slices/feedSlice'
 import {
     addUserFeedOrders,
@@ -167,6 +167,38 @@ export const fallenFruits = {
     image_large: 'https://code.s3.yandex.net/react/code/sp_1-large.png',
     uuid: '4Mj1VWwSqx',
 }
+
+export const ordersToAdd = [
+    {
+        _id: "644399fc45c6f2001be6c7bf",
+        ingredients: [
+            "643d69a5c3f7b9001cfa093d",
+            "643d69a5c3f7b9001cfa093e",
+            "643d69a5c3f7b9001cfa093e",
+            "643d69a5c3f7b9001cfa093d",
+        ],
+        status: "done",
+        name: "Люминесцентный флюоресцентный бургер",
+        createdAt: "2023-04-22T08:25:32.149Z",
+        updatedAt: "2023-04-22T08:25:32.254Z",
+        number: 1144,
+    },
+    {
+        _id: "64437ea745c6f2001be6c7a8",
+        ingredients: [
+            "643d69a5c3f7b9001cfa093c",
+            "643d69a5c3f7b9001cfa0943",
+            "643d69a5c3f7b9001cfa0945",
+            "643d69a5c3f7b9001cfa0943",
+            "643d69a5c3f7b9001cfa093c",
+        ],
+        status: "done",
+        name: "Space антарианский краторный бургер",
+        createdAt: "2023-04-22T06:28:55.263Z",
+        updatedAt: "2023-04-22T06:28:55.359Z",
+        number: 1143,
+    },
+] as IOrder[];
 
 
 

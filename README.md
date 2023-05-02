@@ -44,6 +44,6 @@ The following technologies were used for developing this project:
 **Run tests**  yarn cypress:open
 
 ---
-Link to the deployed site: https://react-burger-space.netlify.app
+Link to the deployed site: https://deploy-preview-7--react-burger-space.netlify.app
 
 

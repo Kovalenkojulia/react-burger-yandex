@@ -88,7 +88,7 @@ interface IUserState {
     loading: boolean;
     authChecked: boolean;
 }
-const initialState: IUserState = {
+export const initialState: IUserState = {
     user: null,
     error: null,
     loginError: null,

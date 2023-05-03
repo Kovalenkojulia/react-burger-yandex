@@ -46,4 +46,3 @@ The following technologies were used for developing this project:
 ---
 Link to the deployed site: https://deploy-preview-7--react-burger-space.netlify.app
 
-

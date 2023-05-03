@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit
 import {API_ENDPOINT} from '../../utils/constants'
 import CheckResponse from '../../utils/check-response'
 import {IIngredient} from '../../types/types'
-import api from '../../utils/api'
 import { RootState } from '../store'
 
 export const fetchIngredients = createAsyncThunk(
@@ -26,10 +25,10 @@ interface IIngredientsState {
 }
 
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
     data: [],
-    isLoading: false,
     hasError: null,
+    isLoading: false,
 }
 const ingredientsSlice = createSlice({
     name: "ingredients",
